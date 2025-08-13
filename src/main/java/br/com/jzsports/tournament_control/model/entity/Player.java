@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -27,6 +29,9 @@ public class Player implements Serializable {
     private String password;
     @Column(nullable = false, unique = true)
     private String email;
+    @CreationTimestamp
+    @Column(updatable = false) //data nao pode ser alterada após inserção
+    private LocalDateTime createdAt;
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Team> teams;
 
