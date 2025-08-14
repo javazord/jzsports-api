@@ -30,12 +30,10 @@ public class PlayerService {
         return playerMapper.toDto(saved);
     }
 
-    public PlayerDTO update(PlayerDTO player) {
-        Player existing = playerRepository.findById(player.getId()).orElseThrow(() -> new RuntimeException("Player not found"));
-
-        playerMapper.updatePlayer(player, existing);
+    public PlayerDTO update(PlayerDTO playerDTO) {
+        Player existing = playerRepository.findById(playerDTO.getId()).orElseThrow(() -> new RuntimeException("Player not found"));
+        playerMapper.updatePlayer(playerDTO, existing);
         Player updated = playerRepository.save(existing);
-
         return playerMapper.toDto(updated);
     }
 
@@ -44,10 +42,10 @@ public class PlayerService {
     }
 
     public List<PlayerDTO> findAll() {
-        List<Player> players = playerRepository.findAll();
-        List<PlayerDTO> playersDTO = players.stream().map(playerMapper::toDto).collect(Collectors.toList());
-        Collections.reverse(playersDTO);
-        return playersDTO;
+        List<Player> playersList = playerRepository.findAll();
+        List<PlayerDTO> playersListDTO = playersList.stream().map(playerMapper::toDto).collect(Collectors.toList());
+        Collections.reverse(playersListDTO);
+        return playersListDTO;
     }
 
 }
