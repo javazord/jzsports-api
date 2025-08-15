@@ -21,9 +21,13 @@ public class Team implements Serializable {
     private Long id;
     @Column(nullable = false)
     private String name;
-    @ManyToOne
-    @JoinColumn(name = "player_id")
-    private Player player;
+    @ManyToMany
+    @JoinTable(
+            name = "team_players",
+            joinColumns = @JoinColumn(name = "team_id"),
+            inverseJoinColumns = @JoinColumn(name = "player_id")
+    )
+    private List<Player> playersList;
     @ManyToOne
     @JoinColumn(name = "championship_id")
     private Championship championship;

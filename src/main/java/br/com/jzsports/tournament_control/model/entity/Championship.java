@@ -18,8 +18,9 @@ import java.util.List;
 public class Championship implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String name;
     @Column
     private String type;
@@ -27,9 +28,9 @@ public class Championship implements Serializable {
     private LocalDate startDate;
     @Column
     private LocalDate endDate;
-    @OneToMany(mappedBy = "championship")
-    private List<Team> teams;
     @OneToMany(mappedBy = "championship", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Match> matches;
+    private List<Team> teamsList;
+    @OneToMany(mappedBy = "championship", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Match> matchesList;
 
 }

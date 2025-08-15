@@ -1,7 +1,11 @@
 package br.com.jzsports.tournament_control.model.e;
 
 public enum ETypePhase {
-    GROUP, ROUND_OF_16, QUARTER_FINAL, SEMI_FINAL, FINAL;
+    GROUP, //
+    ROUND_OF_16, //oitavas
+    QUARTER_FINAL, // 8 times
+    SEMI_FINAL, // 2x2
+    FINAL; //1x1
 
     public ETypePhase getNext(){
         return switch (this){

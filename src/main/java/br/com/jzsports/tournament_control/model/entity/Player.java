@@ -29,10 +29,12 @@ public class Player implements Serializable {
     private String password;
     @Column(nullable = false, unique = true)
     private String email;
+    @Column
+    private String photoURL;
     @CreationTimestamp
     @Column(updatable = false) //data nao pode ser alterada após inserção
     private LocalDateTime createdAt;
-    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Team> teams;
+    @ManyToMany(mappedBy = "playersList")
+    private List<Team> teamsList;
 
 }
