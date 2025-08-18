@@ -28,9 +28,17 @@ public class Championship implements Serializable {
     private LocalDate startDate;
     @Column
     private LocalDate endDate;
-    @OneToMany(mappedBy = "championship", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany
+    @JoinTable(
+            name = "championship_teams",
+            joinColumns = @JoinColumn(name = "championship_id"),
+            inverseJoinColumns = @JoinColumn(name = "team_id")
+    )
     private List<Team> teamsList;
     @OneToMany(mappedBy = "championship", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Match> matchesList;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by_player_id", nullable = false)
+    private Player createdBy;
 
 }

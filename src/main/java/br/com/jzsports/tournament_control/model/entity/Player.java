@@ -1,5 +1,6 @@
 package br.com.jzsports.tournament_control.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,8 +14,8 @@ import java.util.List;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Player implements Serializable {
 
@@ -36,5 +37,9 @@ public class Player implements Serializable {
     private LocalDateTime createdAt;
     @ManyToMany(mappedBy = "playersList")
     private List<Team> teamsList;
+    @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Championship> championshipsCreated;
+
 
 }

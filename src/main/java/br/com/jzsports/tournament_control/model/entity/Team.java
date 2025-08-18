@@ -28,8 +28,7 @@ public class Team implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "player_id")
     )
     private List<Player> playersList;
-    @ManyToOne
-    @JoinColumn(name = "championship_id")
-    private Championship championship;
+    @ManyToMany(mappedBy = "teamsList")
+    private List<Championship> championshipList;
 
 }
