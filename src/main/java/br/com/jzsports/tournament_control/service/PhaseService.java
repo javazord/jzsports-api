@@ -1,6 +1,7 @@
 package br.com.jzsports.tournament_control.service;
 
 import br.com.jzsports.tournament_control.model.dto.PhaseDTO;
+import br.com.jzsports.tournament_control.model.e.EMatchStatus;
 import br.com.jzsports.tournament_control.model.e.ETypePhase;
 import br.com.jzsports.tournament_control.model.entity.Championship;
 import br.com.jzsports.tournament_control.model.entity.Match;
@@ -11,10 +12,9 @@ import br.com.jzsports.tournament_control.repository.ChampionshipRepository;
 import br.com.jzsports.tournament_control.repository.PhaseRepository;
 import org.springframework.stereotype.Service;
 
-import java.lang.annotation.ElementType;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 @Service
 public class PhaseService {
@@ -31,33 +31,34 @@ public class PhaseService {
         this.matchService = matchService;
     }
 
-    public PhaseDTO save(Phase phase) {
-        return null;
-    }
-
     public void generateNextPhase(Long championshipId, ETypePhase currentPhase) {
         Championship championship = championshipRepository.findById(championshipId)
                 .orElseThrow(() -> new RuntimeException("Championship not found"));
 
-        // Busca a fase atual
         Phase currentPhaseEntity = phaseRepository.findByChampionship_IdAndPhase(championshipId, currentPhase)
                 .stream()
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Current phase not found"));
 
-        // Verifica se todos os jogos da fase atual têm vencedor
-        boolean allFinished = currentPhaseEntity.getMatchesList()
+        boolean allFinishedOrCancelled = currentPhaseEntity.getMatchesList()
                 .stream()
-                .allMatch(match -> matchService.getWinner(match) != null);
+                .allMatch(match ->
+                        match.getStatus() == EMatchStatus.FINISHED ||
+                                match.getStatus() == EMatchStatus.CANCELLED
+                );
 
-        if (!allFinished) {
-            throw new RuntimeException("Not all matches are finished for " + currentPhase);
+        if (!allFinishedOrCancelled) {
+            throw new RuntimeException("Not all matches are finished or cancelled for " + currentPhase);
         }
 
-        // Pega os vencedores da fase atual
-        List<Team> winnersList = currentPhaseEntity.getMatchesList()
-                .stream()
-                .map(matchService::getWinner)
+        List<Team> winnersList = currentPhaseEntity.getMatchesList().stream()
+                .map(match -> {
+                    if (match.getStatus() == EMatchStatus.CANCELLED) {
+                        return matchService.getWinnerFromCancellation(match);
+                    }
+                    return matchService.getWinner(match);
+                })
+                .filter(Objects::nonNull)
                 .toList();
 
         ETypePhase nextPhaseType = currentPhase.getNext();
@@ -65,7 +66,6 @@ public class PhaseService {
             throw new RuntimeException("No next phase after " + currentPhase);
         }
 
-        // Cria a nova fase
         Phase nextPhaseEntity = new Phase();
         nextPhaseEntity.setChampionship(championship);
         nextPhaseEntity.setPhase(nextPhaseType);
@@ -73,17 +73,19 @@ public class PhaseService {
 
         phaseRepository.save(nextPhaseEntity);
 
-        // Cria as partidas da próxima fase delegando ao MatchService
-        List<Match> newMatches = matchService.createMatchesForPhase(nextPhaseEntity, winnersList);
+        // MatchService já trata bye automático e vencedor
+        List<Match> newMatches = matchService.createMatchesForPhase(nextPhaseEntity, new ArrayList<>(winnersList));
         nextPhaseEntity.setMatchesList(newMatches);
+
+        phaseRepository.save(nextPhaseEntity);
     }
 
     // Método auxiliar para determinar o vencedor de uma partida
     private Team matchWinner(Match match) {
-        if (match.getScoreTeam1() != null && match.getScoreTeam2() != null) {
-            if (match.getScoreTeam1() > match.getScoreTeam2()) {
+        if (match.getScoreTeamOne() != null && match.getScoreTeamTwo() != null) {
+            if (match.getScoreTeamOne() > match.getScoreTeamTwo()) {
                 return match.getTeamOne();
-            } else if (match.getScoreTeam2() > match.getScoreTeam1()) {
+            } else if (match.getScoreTeamTwo() > match.getScoreTeamOne()) {
                 return match.getTeamTwo();
             }
         }

@@ -1,6 +1,7 @@
 package br.com.jzsports.tournament_control.service;
 
 import br.com.jzsports.tournament_control.model.dto.TeamDTO;
+import br.com.jzsports.tournament_control.model.entity.Championship;
 import br.com.jzsports.tournament_control.model.entity.Team;
 import br.com.jzsports.tournament_control.model.mapper.TeamMapper;
 import br.com.jzsports.tournament_control.repository.TeamRepository;
@@ -21,9 +22,13 @@ public class TeamService {
     }
 
     public TeamDTO save(Team team) {
-        boolean existing = teamRepository.existsByNameAndChampionship_Id(team.getName(), team.getChampionship().getId());
-        if (existing) {
-            throw new RuntimeException("Already exists team with this name");
+        if (team.getChampionshipList() != null) {
+            for (Championship championship : team.getChampionshipList()) {
+                boolean existing = teamRepository.existsByNameAndChampionshipList_Id(team.getName(), championship.getId());
+                if (existing) {
+                    throw new RuntimeException("Already exists team with this name in championship " + championship.getName());
+                }
+            }
         }
         Team saved = teamRepository.save(team);
         return teamMapper.toDto(saved);
