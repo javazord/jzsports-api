@@ -1,6 +1,4 @@
 package br.com.jzsports.tournament_control.model.dto;
-import br.com.jzsports.tournament_control.model.entity.Match;
-import br.com.jzsports.tournament_control.model.entity.Team;
 import lombok.Data;
 import java.time.LocalDate;
 import java.util.List;
@@ -13,7 +11,10 @@ public class ChampionshipDTO {
     private String type;
     private LocalDate startDate;
     private LocalDate endDate;
-    private List<TeamDTO> teams;
-    private List<MatchDTO> matches;
 
+    // Lista de times do campeonato
+    private List<TeamDTO> teamsList;
+
+    // Jogador que criou o campeonato (somente ID e nome para evitar loop)
+    private PlayerSimpleDTO createdBy;
 }
