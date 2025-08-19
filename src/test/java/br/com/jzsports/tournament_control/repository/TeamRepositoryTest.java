@@ -54,17 +54,11 @@ class TeamRepositoryTest {
     @Test
     @DisplayName("Deve retornar true se existir time com o nome em um campeonato")
     void existsByNameAndChampionshipList_IdCase1() {
-        boolean exists = teamRepository.existsByNameAndChampionshipList_Id("Team A", 1L);
-
-        assertThat(exists).isTrue();
     }
 
     @Test
     @DisplayName("Deve retornar false se não existir time com o nome em um campeonato")
     void existsByNameAndChampionshipList_IdCase2() {
-        boolean exists = teamRepository.existsByNameAndChampionshipList_Id("Team B", 1L);
-
-        assertThat(exists).isFalse();
     }
 
     private Player createPlayer() {

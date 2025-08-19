@@ -1,10 +1,12 @@
 package br.com.jzsports.tournament_control.service;
 
 import br.com.jzsports.tournament_control.model.dto.TeamDTO;
-import br.com.jzsports.tournament_control.model.entity.Championship;
+import br.com.jzsports.tournament_control.model.entity.Player;
 import br.com.jzsports.tournament_control.model.entity.Team;
 import br.com.jzsports.tournament_control.model.mapper.TeamMapper;
+import br.com.jzsports.tournament_control.repository.PlayerRepository;
 import br.com.jzsports.tournament_control.repository.TeamRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,29 +15,32 @@ import java.util.stream.Collectors;
 @Service
 public class TeamService {
 
+    private final PlayerRepository playerRepository;
     private final TeamRepository teamRepository;
     private final TeamMapper teamMapper;
 
-    public TeamService(TeamRepository teamRepository, TeamMapper teamMapper) {
+    public TeamService(TeamRepository teamRepository, TeamMapper teamMapper,  PlayerRepository playerRepository) {
         this.teamRepository = teamRepository;
         this.teamMapper = teamMapper;
+        this.playerRepository = playerRepository;
     }
 
-    public TeamDTO save(Team team) {
-        if (team.getChampionshipList() != null) {
-            for (Championship championship : team.getChampionshipList()) {
-                boolean existing = teamRepository.existsByNameAndChampionshipList_Id(team.getName(), championship.getId());
-                if (existing) {
-                    throw new RuntimeException("Already exists team with this name in championship " + championship.getName());
-                }
-            }
+    public TeamDTO save(Team team, List<Long> idPlayersList) {
+        if (idPlayersList == null || idPlayersList.isEmpty()) {
+            throw new IllegalArgumentException("A team must have at least one player");
         }
+
+        List<Player> playersList = playerRepository.findAllById(idPlayersList);
+        if (playersList.size() != idPlayersList.size()) {
+            throw new EntityNotFoundException("Some players were not found");
+        }
+        team.setPlayersList(playersList);
         Team saved = teamRepository.save(team);
         return teamMapper.toDto(saved);
     }
 
     public TeamDTO findById(Long id) {
-        Team team = teamRepository.findById(id).orElseThrow(() -> new RuntimeException("Team not found"));
+        Team team = teamRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Team not found"));
         return teamMapper.toDto(team);
     }
 
@@ -45,12 +50,21 @@ public class TeamService {
         return teamsListDTO;
     }
 
-    public TeamDTO update(TeamDTO teamDTO) {
-        Team existing = teamRepository.findById(teamDTO.getId()).orElseThrow(() -> new RuntimeException("Team not found"));
-        teamMapper.updateTeam(teamDTO, existing);
-        Team updated = teamRepository.save(existing);
+    public TeamDTO update(TeamDTO teamDTO, List<Long> idPlayersList) {
+        Team teamDB = teamRepository.findById(teamDTO.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Team not found"));
+
+        // Busca todos os jogadores pelos IDs
+        List<Player> players = playerRepository.findAllById(idPlayersList);
+        if (players.size() != idPlayersList.size()) {
+            throw new EntityNotFoundException("Some players were not found");
+        }
+        teamDB.setPlayersList(players);
+        teamMapper.updateTeam(teamDTO, teamDB);
+        Team updated = teamRepository.save(teamDB);
         return teamMapper.toDto(updated);
     }
+
 
 
 }

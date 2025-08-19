@@ -6,6 +6,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TeamRepository extends JpaRepository<Team, Long> {
 
-    boolean existsByNameAndChampionshipList_Id(String name, Long id);
-
 }

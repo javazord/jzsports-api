@@ -144,7 +144,6 @@ class PlayerServiceTest {
     @DisplayName("Should find all players with successful")
     void findAllCase1() {
         List<Player> players = List.of(player);
-        List<PlayerDTO> playersDTO = List.of(playerDTO);
 
         when(playerRepository.findAll()).thenReturn(players);
         when(playerMapper.toDto(player)).thenReturn(playerDTO);
