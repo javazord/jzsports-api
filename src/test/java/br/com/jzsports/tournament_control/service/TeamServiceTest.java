@@ -141,7 +141,6 @@ class TeamServiceTest {
         assertThrows(EntityNotFoundException.class, () -> teamService.update(teamDTO, playerIds));
         verify(teamRepository, never()).save(any());
 
-
     }
 
     private Team createTeam() {
