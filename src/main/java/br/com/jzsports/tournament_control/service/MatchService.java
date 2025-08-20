@@ -51,7 +51,6 @@ public class MatchService {
             match.setStatus(EMatchStatus.IN_PROGRESS); // início padrão
             matches.add(match);
         }
-
         return matchRepository.saveAll(matches);
     }
 
