@@ -4,7 +4,6 @@ import br.com.jzsports.tournament_control.model.e.EMatchStatus;
 import br.com.jzsports.tournament_control.model.entity.Match;
 import br.com.jzsports.tournament_control.model.entity.Phase;
 import br.com.jzsports.tournament_control.model.entity.Team;
-import br.com.jzsports.tournament_control.model.mapper.MatchMapper;
 import br.com.jzsports.tournament_control.repository.MatchRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +14,9 @@ import java.util.List;
 public class MatchService {
 
     private final MatchRepository matchRepository;
-    private final MatchMapper matchMapper;
 
-    public MatchService(MatchRepository matchRepository, MatchMapper matchMapper) {
+    public MatchService(MatchRepository matchRepository) {
         this.matchRepository = matchRepository;
-        this.matchMapper = matchMapper;
     }
 
     // Cria partidas para uma fase (inclui bye match se necessário)

@@ -46,8 +46,7 @@ public class TeamService {
 
     public List<TeamDTO> findAllTeams() {
         List<Team> teamList = teamRepository.findAll();
-        List<TeamDTO> teamsListDTO = teamList.stream().map(teamMapper::toDto).collect(Collectors.toList());
-        return teamsListDTO;
+        return teamList.stream().map(teamMapper::toDto).collect(Collectors.toList());
     }
 
     public TeamDTO update(TeamDTO teamDTO, List<Long> idPlayersList) {

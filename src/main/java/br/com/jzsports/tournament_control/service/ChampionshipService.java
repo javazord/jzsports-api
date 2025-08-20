@@ -3,7 +3,10 @@ package br.com.jzsports.tournament_control.service;
 import br.com.jzsports.tournament_control.model.dto.ChampionshipDTO;
 import br.com.jzsports.tournament_control.model.entity.Championship;
 import br.com.jzsports.tournament_control.model.entity.Player;
+import br.com.jzsports.tournament_control.model.mapper.ChampionshipMapper;
 import br.com.jzsports.tournament_control.repository.ChampionshipRepository;
+import br.com.jzsports.tournament_control.repository.PlayerRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +14,21 @@ import java.util.List;
 @Service
 public class ChampionshipService {
 
-    private ChampionshipRepository championshipRepository;
+    private final ChampionshipRepository championshipRepository;
+    private final ChampionshipMapper championshipMapper;
+    private final PlayerRepository playerRepository;
+
+    public ChampionshipService(ChampionshipRepository championshipRepository, ChampionshipMapper championshipMapper, PlayerRepository playerRepository) {
+        this.championshipRepository = championshipRepository;
+        this.championshipMapper = championshipMapper;
+        this.playerRepository = playerRepository;
+    }
+
+    public ChampionshipDTO save(Championship championship) {
+        Player player = playerRepository.findById(championship.getCreatedBy().getId()).orElseThrow(() -> new EntityNotFoundException("Player not found"));
+        championship.setCreatedBy(player);
+        return championshipMapper.toDto(championship);
+    }
 
     public Championship updateChampionship(Long championshipId, Player loggedPlayer, ChampionshipDTO dto) {
         Championship championship = championshipRepository.findById(championshipId)
