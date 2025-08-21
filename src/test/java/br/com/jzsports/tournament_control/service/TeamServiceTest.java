@@ -97,7 +97,7 @@ class TeamServiceTest {
     void findAllTeamsCase01() {
         when(teamRepository.findAll()).thenReturn(List.of(team));
         when(teamMapper.toDto(team)).thenReturn(teamDTO);
-        List<TeamDTO> result = teamService.findAllTeams();
+        List<TeamDTO> result = teamService.findAllByNameAndPlayersList_Id(team.getName(), 1L);
         assertNotNull(result);
         assertEquals(teamDTO.getName(), result.get(0).getName());
         verify(teamRepository, times(1)).findAll();
@@ -107,7 +107,7 @@ class TeamServiceTest {
     @DisplayName("Not should find all team in database")
     void findAllTeamsCase02() {
         when(teamRepository.findAll()).thenReturn(List.of());
-        List<TeamDTO> result = teamService.findAllTeams();
+        List<TeamDTO> result = teamService.findAllByNameAndPlayersList_Id(team.getName(), 1L);
         assertNotNull(result);
         assertTrue(result.isEmpty());
         verify(teamRepository, times(1)).findAll();
@@ -144,11 +144,11 @@ class TeamServiceTest {
     }
 
     private Team createTeam() {
-        return new Team(null, "TeamOne", null, null);
+        return new Team(null, "TeamOne",null, null, null);
     }
 
     private TeamDTO createTeamDTO() {
-        return new TeamDTO(1L, "TeamOne", null, null);
+        return new TeamDTO(1L, "TeamOne", null, null, null);
     }
 
     private Player createPlayer() {

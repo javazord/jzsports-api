@@ -96,7 +96,7 @@ class ChampionshipServiceTest {
         when(championshipRepository.findById(10L)).thenReturn(Optional.of(championship));
         when(championshipRepository.save(any(Championship.class))).thenReturn(championship);
 
-        Championship result = championshipService.updateChampionship(10L, player, championshipDTO);
+        ChampionshipDTO result = championshipService.updateChampionship(10L, player, championshipDTO);
 
         assertThat(result.getName()).isEqualTo("Championship DTO");
         assertThat(result.getType()).isEqualTo("Knockout");
@@ -136,9 +136,9 @@ class ChampionshipServiceTest {
     @Test
     @DisplayName("Should get championship by player")
     void getChampionshipsByPlayer() {
-        when(championshipRepository.findByCreatedBy_Id(1L)).thenReturn(List.of(championship));
+        when(championshipRepository.findByCreatedBy_Id(1L)).thenReturn(List.of(championshipDTO));
 
-        List<Championship> result = championshipService.getChampionshipsByPlayer(1L);
+        List<ChampionshipDTO> result = championshipService.getChampionshipsByPlayer(1L);
 
         assertThat(result).hasSize(1);
         assertThat(result.get(0).getName()).isEqualTo("Championship Test");

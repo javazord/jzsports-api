@@ -1,5 +1,6 @@
 package br.com.jzsports.tournament_control.repository;
 
+import br.com.jzsports.tournament_control.model.dto.ChampionshipDTO;
 import br.com.jzsports.tournament_control.model.entity.Championship;
 import br.com.jzsports.tournament_control.model.entity.Player;
 import org.assertj.core.api.Assertions;
@@ -40,7 +41,7 @@ class ChampionshipRepositoryTest {
     @Test
     @DisplayName("Should find created player by id")
     void findByCreatedBy_Id() {
-        List<Championship> result = championshipRepository.findByCreatedBy_Id(player.getId());
+        List<ChampionshipDTO> result = championshipRepository.findByCreatedBy_Id(player.getId());
 
         assertThat(result)
                 .isNotEmpty()

@@ -91,8 +91,8 @@ class PlayerServiceTest {
         }).when(playerMapper).updatePlayer(any(PlayerDTO.class), any(Player.class));
         when(playerRepository.save(player)).thenReturn(player);
         when(playerMapper.toDto(player)).thenReturn(playerDTO);
-
-        PlayerDTO result = playerService.update(playerDTO);
+        Long id = 1L;
+        PlayerDTO result = playerService.update(id, playerDTO);
 
         Assertions.assertNotNull(result);
         Assertions.assertEquals("Mateus", result.getName());
@@ -106,8 +106,8 @@ class PlayerServiceTest {
     @DisplayName("Not should update player with successful, player already exists")
     void updateCase2() {
         when(playerRepository.findById(playerDTO.getId())).thenReturn(Optional.empty());
-
-        Assertions.assertThrows(RuntimeException.class, () -> playerService.update(playerDTO));
+        Long id = 1L;
+        Assertions.assertThrows(RuntimeException.class, () -> playerService.update(id, playerDTO));
 
         verify(playerRepository).findById(playerDTO.getId());
         verifyNoMoreInteractions(playerMapper, playerRepository);
@@ -120,7 +120,7 @@ class PlayerServiceTest {
         when(playerRepository.findById(playerDTO.getId())).thenReturn(Optional.of(player));
         when(playerMapper.toDto(player)).thenReturn(playerDTO);
 
-        PlayerDTO result = playerService.findById(playerDTO);
+        PlayerDTO result = playerService.findById(playerDTO.getId());
 
         Assertions.assertNotNull(result);
         Assertions.assertEquals(playerDTO.getId(), result.getId());
@@ -133,7 +133,7 @@ class PlayerServiceTest {
     void findByIdCase2() {
         when(playerRepository.findById(playerDTO.getId())).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(RuntimeException.class, () -> playerService.findById(playerDTO));
+        Assertions.assertThrows(RuntimeException.class, () -> playerService.findById(playerDTO.getId()));
 
         verify(playerRepository).findById(playerDTO.getId());
         verifyNoInteractions(playerMapper);

@@ -104,11 +104,11 @@ class PhaseRepositoryTest {
     }
 
     private Team createTeamOne() {
-        return new Team(null, "TeamOne", null, null);
+        return new Team(null, "TeamOne",null, null, null);
     }
 
     private Team createTeamTwo() {
-        return new Team(null, "TeamTwo", null, null);
+        return new Team(null, "TeamTwo", null, null, null);
     }
 
     private Championship createChampionship() {
