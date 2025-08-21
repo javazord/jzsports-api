@@ -29,16 +29,10 @@ import static org.assertj.core.api.Assertions.*;
 class PhaseServiceTest {
 
     @Mock
-    private PlayerRepository playerRepository;
-
-    @Mock
     private ChampionshipRepository championshipRepository;
 
     @Mock
     private PhaseRepository phaseRepository;
-
-    @Mock
-    private MatchRepository matchRepository;
 
     @Mock
     private MatchService matchService;
@@ -58,9 +52,7 @@ class PhaseServiceTest {
     @BeforeEach
     void setUp() {
         player = createPlayer();
-        playerRepository.save(player);
         championship = createChampionship();
-        championshipRepository.save(championship);
 
         teamA = new Team();
         teamA.setId(1L);
@@ -71,7 +63,6 @@ class PhaseServiceTest {
         teamB.setName("Team B");
 
         match = createMatch();
-        matchRepository.save(match);
 
         currentPhase = getCurrentPhase();
     }

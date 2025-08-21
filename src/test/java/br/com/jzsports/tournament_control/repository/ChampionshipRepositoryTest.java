@@ -28,12 +28,11 @@ class ChampionshipRepositoryTest {
     private PlayerRepository playerRepository;
 
     private Player player;
-    private Championship championship;
 
     @BeforeEach
     void setUp() {
         player = createPlayer();
-        championship = createChampionship();
+        Championship championship = createChampionship();
         playerRepository.save(player);
         championshipRepository.save(championship);
     }
