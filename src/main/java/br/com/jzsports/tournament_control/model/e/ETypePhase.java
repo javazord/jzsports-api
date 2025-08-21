@@ -13,6 +13,7 @@ public enum ETypePhase {
             case ROUND_OF_16 -> QUARTER_FINAL;
             case QUARTER_FINAL -> SEMI_FINAL;
             case SEMI_FINAL -> FINAL;
+            case FINAL -> null;
             default -> null;
         };
     }
