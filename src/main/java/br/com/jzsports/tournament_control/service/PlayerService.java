@@ -29,15 +29,15 @@ public class PlayerService {
         return playerMapper.toDto(saved);
     }
 
-    public PlayerDTO update(PlayerDTO playerDTO) {
-        Player existing = playerRepository.findById(playerDTO.getId()).orElseThrow(() -> new RuntimeException("Player not found"));
+    public PlayerDTO update(Long id, PlayerDTO playerDTO) {
+        Player existing = playerRepository.findById(id).orElseThrow(() -> new RuntimeException("Player not found with id " + id));
         playerMapper.updatePlayer(playerDTO, existing);
         Player updated = playerRepository.save(existing);
         return playerMapper.toDto(updated);
     }
 
-    public PlayerDTO findById(PlayerDTO id) {
-        return playerRepository.findById(id.getId()).map(playerMapper::toDto).orElseThrow(() -> new RuntimeException("Player not found"));
+    public PlayerDTO findById(Long id) {
+        return playerRepository.findById(id).map(playerMapper::toDto).orElseThrow(() -> new RuntimeException("Player not found with id " + id));
     }
 
     public List<PlayerDTO> findAll() {

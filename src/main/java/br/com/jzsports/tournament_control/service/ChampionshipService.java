@@ -30,7 +30,7 @@ public class ChampionshipService {
         return championshipMapper.toDto(championship);
     }
 
-    public Championship updateChampionship(Long championshipId, Player loggedPlayer, ChampionshipDTO dto) {
+    public ChampionshipDTO updateChampionship(Long championshipId, Player loggedPlayer, ChampionshipDTO dto) {
         Championship championship = championshipRepository.findById(championshipId)
                 .orElseThrow(() -> new RuntimeException("Championship not found"));
 
@@ -42,12 +42,16 @@ public class ChampionshipService {
         championship.setType(dto.getType());
         championship.setStartDate(dto.getStartDate());
         championship.setEndDate(dto.getEndDate());
-
-        return championshipRepository.save(championship);
+        championshipRepository.save(championship);
+        return championshipMapper.toDto(championship);
     }
 
-    public List<Championship> getChampionshipsByPlayer(Long playerId) {
+    public List<ChampionshipDTO> getChampionshipsByPlayer(Long playerId) {
         return championshipRepository.findByCreatedBy_Id(playerId);
+    }
+
+    public Championship getChampionshipById(Long championshipId) {
+        return championshipRepository.findById(championshipId).orElseThrow(() -> new EntityNotFoundException("Championship not found with id " + championshipId));
     }
 
 }

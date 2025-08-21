@@ -80,19 +80,6 @@ public class PhaseService {
         phaseRepository.save(nextPhaseEntity);
     }
 
-    // Método auxiliar para determinar o vencedor de uma partida
-    private Team matchWinner(Match match) {
-        if (match.getScoreTeamOne() != null && match.getScoreTeamTwo() != null) {
-            if (match.getScoreTeamOne() > match.getScoreTeamTwo()) {
-                return match.getTeamOne();
-            } else if (match.getScoreTeamTwo() > match.getScoreTeamOne()) {
-                return match.getTeamTwo();
-            }
-        }
-        return null; // empate ou partida não concluída
-    }
-
-
     public PhaseDTO findById(Long id) {
         Phase phase = phaseRepository.findById(id).orElseThrow(() -> new RuntimeException("Phase not found"));
         return phaseMapper.toDto(phase);

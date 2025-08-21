@@ -40,12 +40,12 @@ public class TeamService {
     }
 
     public TeamDTO findById(Long id) {
-        Team team = teamRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Team not found"));
+        Team team = teamRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Team not found with id " + id));
         return teamMapper.toDto(team);
     }
 
-    public List<TeamDTO> findAllTeams() {
-        List<Team> teamList = teamRepository.findAll();
+    public List<TeamDTO> findAllByNameAndPlayersList_Id(String name, Long idPlayersList) {
+        List<Team> teamList = teamRepository.findByNameAndPlayersList_Id(name, idPlayersList);
         return teamList.stream().map(teamMapper::toDto).collect(Collectors.toList());
     }
 
