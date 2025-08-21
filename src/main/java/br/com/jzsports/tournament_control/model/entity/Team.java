@@ -21,6 +21,8 @@ public class Team implements Serializable {
     private Long id;
     @Column(nullable = false)
     private String name;
+    @Column
+    private String photoURL;
     @ManyToMany
     @JoinTable(
             name = "team_players",
