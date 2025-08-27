@@ -20,7 +20,7 @@ public class Team implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String name;
+    private String teamName;
     @Column
     private String photoURL;
     @ManyToMany

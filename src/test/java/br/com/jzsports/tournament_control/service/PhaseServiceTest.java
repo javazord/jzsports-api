@@ -6,9 +6,7 @@ import br.com.jzsports.tournament_control.model.e.ETypePhase;
 import br.com.jzsports.tournament_control.model.entity.*;
 import br.com.jzsports.tournament_control.model.mapper.PhaseMapper;
 import br.com.jzsports.tournament_control.repository.ChampionshipRepository;
-import br.com.jzsports.tournament_control.repository.MatchRepository;
 import br.com.jzsports.tournament_control.repository.PhaseRepository;
-import br.com.jzsports.tournament_control.repository.PlayerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,11 +54,11 @@ class PhaseServiceTest {
 
         teamA = new Team();
         teamA.setId(1L);
-        teamA.setName("Team A");
+        teamA.setTeamName("Team A");
 
         teamB = new Team();
         teamB.setId(2L);
-        teamB.setName("Team B");
+        teamB.setTeamName("Team B");
 
         match = createMatch();
 

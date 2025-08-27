@@ -1,6 +1,7 @@
 package br.com.jzsports.tournament_control.controller;
 
 import br.com.jzsports.tournament_control.model.dto.ChampionshipDTO;
+import br.com.jzsports.tournament_control.model.dto.ChampionshipRequestDTO;
 import br.com.jzsports.tournament_control.model.entity.Championship;
 import br.com.jzsports.tournament_control.model.entity.Player;
 import br.com.jzsports.tournament_control.service.ChampionshipService;
@@ -25,8 +26,8 @@ public class ChampionshipController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateChampionship(@PathVariable Long id, @RequestBody ChampionshipDTO dto, @RequestBody Player loggedPlayer) {
-        ChampionshipDTO championshipDTO = championshipService.updateChampionship(id, loggedPlayer, dto);
+    public ResponseEntity<?> updateChampionship(@PathVariable Long id, @RequestBody ChampionshipRequestDTO  champ) {
+        ChampionshipDTO championshipDTO = championshipService.updateChampionship(id, champ.getLoggedPlayer(), champ.getChampionship());
         return ResponseEntity.ok(championshipDTO);
     }
 

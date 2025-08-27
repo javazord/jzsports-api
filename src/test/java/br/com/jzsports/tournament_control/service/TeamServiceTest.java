@@ -61,7 +61,7 @@ class TeamServiceTest {
         TeamDTO result = teamService.save(team, playerIds);
 
         assertNotNull(result);
-        assertEquals(teamDTO.getName(), result.getName());
+        assertEquals(teamDTO.getTeamName(), result.getTeamName());
         verify(teamRepository, times(1)).save(team);
     }
 
@@ -79,7 +79,7 @@ class TeamServiceTest {
         when(teamMapper.toDto(team)).thenReturn(teamDTO);
         TeamDTO result = teamService.findById(1L);
         assertNotNull(result);
-        assertEquals("TeamOne", result.getName());
+        assertEquals("TeamOne", result.getTeamName());
         verify(teamRepository, times(1)).findById(1L);
     }
 
@@ -97,9 +97,9 @@ class TeamServiceTest {
     void findAllTeamsCase01() {
         when(teamRepository.findAll()).thenReturn(List.of(team));
         when(teamMapper.toDto(team)).thenReturn(teamDTO);
-        List<TeamDTO> result = teamService.findAllByNameAndPlayersList_Id(team.getName(), 1L);
+        List<TeamDTO> result = teamService.findAllByNameAndPlayersList_Id(team.getTeamName(), 1L);
         assertNotNull(result);
-        assertEquals(teamDTO.getName(), result.get(0).getName());
+        assertEquals(teamDTO.getTeamName(), result.get(0).getTeamName());
         verify(teamRepository, times(1)).findAll();
     }
 
@@ -107,7 +107,7 @@ class TeamServiceTest {
     @DisplayName("Not should find all team in database")
     void findAllTeamsCase02() {
         when(teamRepository.findAll()).thenReturn(List.of());
-        List<TeamDTO> result = teamService.findAllByNameAndPlayersList_Id(team.getName(), 1L);
+        List<TeamDTO> result = teamService.findAllByNameAndPlayersList_Id(team.getTeamName(), 1L);
         assertNotNull(result);
         assertTrue(result.isEmpty());
         verify(teamRepository, times(1)).findAll();
@@ -127,7 +127,7 @@ class TeamServiceTest {
         TeamDTO result = teamService.update(teamDTO, playerIds);
 
         assertNotNull(result);
-        assertEquals(teamDTO.getName(), result.getName());
+        assertEquals(teamDTO.getTeamName(), result.getTeamName());
         verify(teamRepository, times(1)).save(team);
     }
 
