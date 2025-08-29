@@ -38,7 +38,7 @@ public class ChampionshipService {
             throw new RuntimeException("You do not have permission to update this championship");
         }
 
-        championship.setName(dto.getName());
+        championship.setChampionshipName(dto.getName());
         championship.setType(dto.getType());
         championship.setStartDate(dto.getStartDate());
         championship.setEndDate(dto.getEndDate());

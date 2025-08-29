@@ -21,7 +21,7 @@ public class Championship implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String name;
+    private String championshipName;
     @Column
     private String type;
     @Column

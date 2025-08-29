@@ -61,9 +61,10 @@ public class PhaseService {
                 .filter(Objects::nonNull)
                 .toList();
 
-        ETypePhase nextPhaseType = currentPhase.getNext();
+        // 🚀 Agora a próxima fase depende da quantidade de times classificados
+        ETypePhase nextPhaseType = ETypePhase.fromTeamCount(winnersList.size());
         if (nextPhaseType == null) {
-            throw new RuntimeException("No next phase after " + currentPhase);
+            throw new RuntimeException("No valid next phase for " + winnersList.size() + " teams");
         }
 
         Phase nextPhaseEntity = new Phase();

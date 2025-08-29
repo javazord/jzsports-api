@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -23,6 +25,9 @@ public class Team implements Serializable {
     private String teamName;
     @Column
     private String photoURL;
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDate createdAt;
     @ManyToMany
     @JoinTable(
             name = "team_players",

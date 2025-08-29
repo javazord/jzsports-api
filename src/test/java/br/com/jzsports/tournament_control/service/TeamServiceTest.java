@@ -144,11 +144,11 @@ class TeamServiceTest {
     }
 
     private Team createTeam() {
-        return new Team(null, "TeamOne",null, null, null);
+        return new Team(null, "TeamOne", null, null, null, null);
     }
 
     private TeamDTO createTeamDTO() {
-        return new TeamDTO(1L, "TeamOne", null, null, null);
+        return new TeamDTO(1L, "TeamOne", null, null, null, null);
     }
 
     private Player createPlayer() {

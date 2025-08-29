@@ -50,7 +50,7 @@ class ChampionshipServiceTest {
 
         championship = new Championship();
         championship.setId(10L);
-        championship.setName("Championship Test");
+        championship.setChampionshipName("Championship Test");
         championship.setCreatedBy(player);
 
         championshipDTO = new ChampionshipDTO();
