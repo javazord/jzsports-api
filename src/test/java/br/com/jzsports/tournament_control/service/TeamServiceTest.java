@@ -1,6 +1,7 @@
 package br.com.jzsports.tournament_control.service;
 
 import br.com.jzsports.tournament_control.model.dto.TeamDTO;
+import br.com.jzsports.tournament_control.model.dto.TeamRequestDTO;
 import br.com.jzsports.tournament_control.model.entity.Player;
 import br.com.jzsports.tournament_control.model.entity.Team;
 import br.com.jzsports.tournament_control.model.mapper.TeamMapper;
@@ -38,12 +39,12 @@ class TeamServiceTest {
     private TeamService teamService;
 
     private Team team;
-    private TeamDTO teamDTO;
+    private TeamRequestDTO teamRequestDTO;
 
     @BeforeEach
     void setUp() {
         team = createTeam();
-        teamDTO = createTeamDTO();
+        teamRequestDTO = createTeamDTO();
     }
 
     @Test
@@ -56,19 +57,19 @@ class TeamServiceTest {
 
         when(playerRepository.findAllById(playerIds)).thenReturn(players);
         when(teamRepository.save(team)).thenReturn(team);
-        when(teamMapper.toDto(team)).thenReturn(teamDTO);
+        when(teamMapper.toRequestDto(team)).thenReturn(teamRequestDTO);
 
-        TeamDTO result = teamService.save(team, playerIds);
+        TeamDTO result = teamService.save(team);
 
         assertNotNull(result);
-        assertEquals(teamDTO.getTeamName(), result.getTeamName());
+        assertEquals(teamRequestDTO.getTeamName(), result.getTeamName());
         verify(teamRepository, times(1)).save(team);
     }
 
     @Test
     @DisplayName("Not should save team in database")
     void saveCase02() {
-        assertThrows(IllegalArgumentException.class, () -> teamService.save(team, List.of()));
+        assertThrows(IllegalArgumentException.class, () -> teamService.save(team));
         verify(teamRepository, never()).save(any());
     }
 
@@ -76,7 +77,7 @@ class TeamServiceTest {
     @DisplayName("Should find team in database")
     void findByIdCase01() {
         when(teamRepository.findById(1L)).thenReturn(Optional.of(team));
-        when(teamMapper.toDto(team)).thenReturn(teamDTO);
+        when(teamMapper.toRequestDto(team)).thenReturn(teamRequestDTO);
         TeamDTO result = teamService.findById(1L);
         assertNotNull(result);
         assertEquals("TeamOne", result.getTeamName());
@@ -96,10 +97,10 @@ class TeamServiceTest {
     @DisplayName("Should find all team in database")
     void findAllTeamsCase01() {
         when(teamRepository.findAll()).thenReturn(List.of(team));
-        when(teamMapper.toDto(team)).thenReturn(teamDTO);
-        List<TeamDTO> result = teamService.findAllByNameAndPlayersList_Id(team.getTeamName(), 1L);
+        when(teamMapper.toRequestDto(team)).thenReturn(teamRequestDTO);
+        List<TeamDTO> result = teamService.getAllByNameAndPlayersList_Id(team.getTeamName(), 1L);
         assertNotNull(result);
-        assertEquals(teamDTO.getTeamName(), result.get(0).getTeamName());
+        assertEquals(teamRequestDTO.getTeamName(), result.get(0).getTeamName());
         verify(teamRepository, times(1)).findAll();
     }
 
@@ -107,7 +108,7 @@ class TeamServiceTest {
     @DisplayName("Not should find all team in database")
     void findAllTeamsCase02() {
         when(teamRepository.findAll()).thenReturn(List.of());
-        List<TeamDTO> result = teamService.findAllByNameAndPlayersList_Id(team.getTeamName(), 1L);
+        List<TeamDTO> result = teamService.getAllByNameAndPlayersList_Id(team.getTeamName(), 1L);
         assertNotNull(result);
         assertTrue(result.isEmpty());
         verify(teamRepository, times(1)).findAll();
@@ -119,15 +120,15 @@ class TeamServiceTest {
         List<Long> playerIds = List.of(1L, 2L);
         List<Player> players = List.of(createPlayer(), createPlayer());
 
-        when(teamRepository.findById(teamDTO.getId())).thenReturn(Optional.of(team));
+        when(teamRepository.findById(teamRequestDTO.getId())).thenReturn(Optional.of(team));
         when(playerRepository.findAllById(playerIds)).thenReturn((players));
         when(teamRepository.save(team)).thenReturn(team);
-        when(teamMapper.toDto(team)).thenReturn(teamDTO);
+        when(teamMapper.toRequestDto(team)).thenReturn(teamRequestDTO);
 
-        TeamDTO result = teamService.update(teamDTO, playerIds);
+        TeamDTO result = teamService.update(teamRequestDTO);
 
         assertNotNull(result);
-        assertEquals(teamDTO.getTeamName(), result.getTeamName());
+        assertEquals(teamRequestDTO.getTeamName(), result.getTeamName());
         verify(teamRepository, times(1)).save(team);
     }
 
@@ -136,9 +137,9 @@ class TeamServiceTest {
     void updateCase02() {
 
         List<Long> playerIds = List.of(1L, 2L);
-        when(teamRepository.findById(teamDTO.getId())).thenReturn(Optional.empty());
+        when(teamRepository.findById(teamRequestDTO.getId())).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotFoundException.class, () -> teamService.update(teamDTO, playerIds));
+        assertThrows(EntityNotFoundException.class, () -> teamService.update(teamRequestDTO));
         verify(teamRepository, never()).save(any());
 
     }
@@ -147,8 +148,8 @@ class TeamServiceTest {
         return new Team(null, "TeamOne", null, null, null, null);
     }
 
-    private TeamDTO createTeamDTO() {
-        return new TeamDTO(1L, "TeamOne", null, null, null, null);
+    private TeamRequestDTO createTeamDTO() {
+        return new TeamRequestDTO(1L, "TeamOne", null, null, null);
     }
 
     private Player createPlayer() {

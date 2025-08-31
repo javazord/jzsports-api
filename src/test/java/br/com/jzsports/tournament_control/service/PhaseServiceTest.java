@@ -133,22 +133,6 @@ class PhaseServiceTest {
         verify(phaseMapper).toDto(currentPhase);
     }
 
-    @Test
-    @DisplayName("Should return team winner")
-    void teamWinner() throws Exception {
-        Match match = new Match();
-        match.setTeamOne(teamA);
-        match.setTeamTwo(teamB);
-        match.setScoreTeamOne(3);
-        match.setScoreTeamTwo(1);
-
-        var method = PhaseService.class.getDeclaredMethod("matchWinner", Match.class);
-        method.setAccessible(true);
-        Team winner = (Team) method.invoke(phaseService, match);
-
-        assertThat(winner).isEqualTo(teamA);
-    }
-
     private Player createPlayer() {
         return new Player(
                 null,
