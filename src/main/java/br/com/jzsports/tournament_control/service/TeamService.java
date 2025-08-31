@@ -1,6 +1,7 @@
 package br.com.jzsports.tournament_control.service;
 
 import br.com.jzsports.tournament_control.model.dto.TeamDTO;
+import br.com.jzsports.tournament_control.model.dto.TeamRequestDTO;
 import br.com.jzsports.tournament_control.model.entity.Player;
 import br.com.jzsports.tournament_control.model.entity.Team;
 import br.com.jzsports.tournament_control.model.mapper.TeamMapper;
@@ -25,13 +26,13 @@ public class TeamService {
         this.playerRepository = playerRepository;
     }
 
-    public TeamDTO save(Team team, List<Long> idPlayersList) {
-        if (idPlayersList == null || idPlayersList.isEmpty()) {
+    public TeamDTO save(Team team) {
+        if (team.getPlayersList() == null || team.getPlayersList().isEmpty()) {
             throw new IllegalArgumentException("A team must have at least one player");
         }
 
-        List<Player> playersList = playerRepository.findAllById(idPlayersList);
-        if (playersList.size() != idPlayersList.size()) {
+        List<Player> playersList = playerRepository.findAllById(team.getPlayersList().stream().map(Player::getId).collect(Collectors.toList()));
+        if (playersList.size() != team.getPlayersList().size()) {
             throw new EntityNotFoundException("Some players were not found");
         }
         team.setPlayersList(playersList);
@@ -44,22 +45,22 @@ public class TeamService {
         return teamMapper.toDto(team);
     }
 
-    public List<TeamDTO> findAllByNameAndPlayersList_Id(String name, Long idPlayersList) {
-        List<Team> teamList = teamRepository.findByNameAndPlayersList_Id(name, idPlayersList);
+    public List<TeamDTO> getAllByNameAndPlayersList_Id(String name, Long idPlayersList) {
+        List<Team> teamList = teamRepository.findByTeamNameAndPlayersList_Id(name, idPlayersList);
         return teamList.stream().map(teamMapper::toDto).collect(Collectors.toList());
     }
 
-    public TeamDTO update(TeamDTO teamDTO, List<Long> idPlayersList) {
-        Team teamDB = teamRepository.findById(teamDTO.getId())
+    public TeamDTO update(TeamRequestDTO teamRequestDTO) {
+        Team teamDB = teamRepository.findById(teamRequestDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Team not found"));
 
         // Busca todos os jogadores pelos IDs
-        List<Player> players = playerRepository.findAllById(idPlayersList);
-        if (players.size() != idPlayersList.size()) {
+        List<Player> players = playerRepository.findAllById(teamRequestDTO.getIdPlayersList());
+        if (players.size() != teamRequestDTO.getIdPlayersList().size()) {
             throw new EntityNotFoundException("Some players were not found");
         }
         teamDB.setPlayersList(players);
-        teamMapper.updateTeam(teamDTO, teamDB);
+        teamMapper.updateTeam(teamRequestDTO, teamDB);
         Team updated = teamRepository.save(teamDB);
         return teamMapper.toDto(updated);
     }

@@ -1,6 +1,7 @@
 package br.com.jzsports.tournament_control.controller;
 
 import br.com.jzsports.tournament_control.model.dto.TeamDTO;
+import br.com.jzsports.tournament_control.model.dto.TeamRequestDTO;
 import br.com.jzsports.tournament_control.model.entity.Team;
 import br.com.jzsports.tournament_control.service.TeamService;
 import lombok.RequiredArgsConstructor;
@@ -20,20 +21,20 @@ public class TeamController {
     private final TeamService teamService;
 
     @PostMapping
-    public ResponseEntity<?> createTeam(@RequestBody Team team,  List<Long> idPlayersList) {
-        TeamDTO teamDTO = teamService.save(team, idPlayersList);
+    public ResponseEntity<?> createTeam(@RequestBody Team team) {
+        TeamDTO teamDTO = teamService.save(team);
         return ResponseEntity.status(HttpStatus.CREATED).body(teamDTO);
     }
 
     @PutMapping
-    public ResponseEntity<?> updateTeam(@RequestBody TeamDTO teamDTO,  List<Long> idPlayersList) {
-        TeamDTO DTO = teamService.update(teamDTO, idPlayersList);
+    public ResponseEntity<?> updateTeam(@RequestBody TeamRequestDTO teamRequestDTO) {
+        TeamDTO DTO = teamService.update(teamRequestDTO);
         return ResponseEntity.ok(DTO);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<List<TeamDTO>> getByNameAndPlayersList_Id(@RequestParam (value = "name", required = false) String name, @PathVariable Long id) {
-        List<TeamDTO> dtoList = teamService.findAllByNameAndPlayersList_Id(name, id);
+    @GetMapping("all/{id}")
+    public ResponseEntity<List<TeamDTO>> getByNameAndPlayersList_Id(@RequestParam (value = "teamName", required = false) String teamName, @PathVariable Long id) {
+        List<TeamDTO> dtoList = teamService.getAllByNameAndPlayersList_Id(teamName, id);
         return ResponseEntity.ok(dtoList);
     }
 
