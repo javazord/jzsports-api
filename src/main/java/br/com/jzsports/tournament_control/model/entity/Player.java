@@ -31,6 +31,8 @@ public class Player implements Serializable {
     @Column(nullable = false, unique = true)
     private String email;
     @Column
+    private String color;
+    @Column
     private String photoURL;
     @CreationTimestamp
     @Column(updatable = false) //data nao pode ser alterada após inserção
