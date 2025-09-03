@@ -59,6 +59,7 @@ class ChampionshipRepositoryTest {
                 "javazord",
                 "123@",
                 "mateus@gmail.com",
+                "",
                 "undefined",
                 LocalDateTime.now(),
                 null,

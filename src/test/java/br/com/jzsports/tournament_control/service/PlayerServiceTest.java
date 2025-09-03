@@ -177,6 +177,7 @@ class PlayerServiceTest {
                 "javazord",
                 "123@",
                 "mateus@gmail.com",
+                "",
                 "undefined",
                 LocalDateTime.now(),
                 null,

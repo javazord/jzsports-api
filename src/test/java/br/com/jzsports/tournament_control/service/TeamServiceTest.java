@@ -159,6 +159,7 @@ class TeamServiceTest {
                 "javazord",
                 "123@",
                 "mateus@gmail.com",
+                "",
                 "undefined",
                 LocalDateTime.now(),
                 null,

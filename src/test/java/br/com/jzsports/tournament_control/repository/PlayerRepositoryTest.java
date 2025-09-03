@@ -53,6 +53,7 @@ class PlayerRepositoryTest {
                 "javazord",
                 "123@",
                 "mateus@gmail.com",
+                "",
                 "undefined",
                 LocalDateTime.now(),
                 new ArrayList<>(),
