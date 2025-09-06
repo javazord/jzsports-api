@@ -23,7 +23,7 @@ public class Player implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String name;
+    private String playerName;
     @Column(nullable = false, unique = true, length = 12)
     private String nickname;
     @Column(nullable = false)

@@ -46,7 +46,7 @@ class ChampionshipServiceTest {
 
         player = new Player();
         player.setId(1L);
-        player.setName("Player Test");
+        player.setPlayerName(("Player Test"));
 
         championship = new Championship();
         championship.setId(10L);
