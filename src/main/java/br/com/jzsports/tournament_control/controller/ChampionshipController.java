@@ -1,9 +1,8 @@
 package br.com.jzsports.tournament_control.controller;
 
-import br.com.jzsports.tournament_control.model.dto.ChampionshipDTO;
-import br.com.jzsports.tournament_control.model.dto.ChampionshipRequestDTO;
+import br.com.jzsports.tournament_control.model.dto.championship.ChampionshipDTO;
+import br.com.jzsports.tournament_control.model.dto.championship.ChampionshipRequestDTO;
 import br.com.jzsports.tournament_control.model.entity.Championship;
-import br.com.jzsports.tournament_control.model.entity.Player;
 import br.com.jzsports.tournament_control.service.ChampionshipService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

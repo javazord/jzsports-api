@@ -1,6 +1,6 @@
-package br.com.jzsports.tournament_control.model.dto;
-import br.com.jzsports.tournament_control.model.entity.Championship;
-import br.com.jzsports.tournament_control.model.entity.Player;
+package br.com.jzsports.tournament_control.model.dto.match;
+import br.com.jzsports.tournament_control.model.dto.championship.ChampionshipDTO;
+import br.com.jzsports.tournament_control.model.dto.player.PlayerDTO;
 import lombok.Data;
 
 @Data

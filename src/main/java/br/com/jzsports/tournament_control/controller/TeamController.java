@@ -1,11 +1,10 @@
 package br.com.jzsports.tournament_control.controller;
 
-import br.com.jzsports.tournament_control.model.dto.TeamDTO;
-import br.com.jzsports.tournament_control.model.dto.TeamRequestDTO;
+import br.com.jzsports.tournament_control.model.dto.team.TeamDTO;
+import br.com.jzsports.tournament_control.model.dto.team.TeamRequestDTO;
 import br.com.jzsports.tournament_control.model.entity.Team;
 import br.com.jzsports.tournament_control.service.TeamService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

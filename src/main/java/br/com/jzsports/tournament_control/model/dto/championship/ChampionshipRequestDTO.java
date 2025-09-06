@@ -1,6 +1,5 @@
-package br.com.jzsports.tournament_control.model.dto;
+package br.com.jzsports.tournament_control.model.dto.championship;
 
-import br.com.jzsports.tournament_control.model.entity.Championship;
 import br.com.jzsports.tournament_control.model.entity.Player;
 import lombok.Data;
 

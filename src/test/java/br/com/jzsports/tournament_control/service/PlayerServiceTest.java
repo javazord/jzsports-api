@@ -1,6 +1,6 @@
 package br.com.jzsports.tournament_control.service;
 
-import br.com.jzsports.tournament_control.model.dto.PlayerDTO;
+import br.com.jzsports.tournament_control.model.dto.player.PlayerDTO;
 import br.com.jzsports.tournament_control.model.entity.Player;
 import br.com.jzsports.tournament_control.model.mapper.PlayerMapper;
 import br.com.jzsports.tournament_control.repository.PlayerRepository;
@@ -40,7 +40,7 @@ class PlayerServiceTest {
         // inicializa playerDTO manualmente
         playerDTO = new PlayerDTO();
         playerDTO.setId(1L);
-        playerDTO.setName(player.getPlayerName());
+        playerDTO.setUsername(player.getUsername());
         playerDTO.setNickname(player.getNickname());
         playerDTO.setEmail(player.getEmail());
         playerDTO.setPhotoURL(player.getPhotoURL());
@@ -86,7 +86,7 @@ class PlayerServiceTest {
         doAnswer(invocation -> {
             PlayerDTO dto = invocation.getArgument(0);
             Player entity = invocation.getArgument(1);
-            entity.setPlayerName(dto.getName());
+            entity.setUsername(dto.getUsername());
             return null;
         }).when(playerMapper).updatePlayer(any(PlayerDTO.class), any(Player.class));
         when(playerRepository.save(player)).thenReturn(player);
@@ -95,7 +95,7 @@ class PlayerServiceTest {
         PlayerDTO result = playerService.update(id, playerDTO);
 
         Assertions.assertNotNull(result);
-        Assertions.assertEquals("Mateus", result.getName());
+        Assertions.assertEquals("Mateus", result.getUsername());
         verify(playerRepository).findById(playerDTO.getId());
         verify(playerMapper).updatePlayer(playerDTO, player);
         verify(playerRepository).save(player);

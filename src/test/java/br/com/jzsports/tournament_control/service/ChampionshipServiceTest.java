@@ -1,6 +1,6 @@
 package br.com.jzsports.tournament_control.service;
 
-import br.com.jzsports.tournament_control.model.dto.ChampionshipDTO;
+import br.com.jzsports.tournament_control.model.dto.championship.ChampionshipDTO;
 import br.com.jzsports.tournament_control.model.entity.Championship;
 import br.com.jzsports.tournament_control.model.entity.Player;
 import br.com.jzsports.tournament_control.model.mapper.ChampionshipMapper;
@@ -46,7 +46,7 @@ class ChampionshipServiceTest {
 
         player = new Player();
         player.setId(1L);
-        player.setPlayerName(("Player Test"));
+        player.setUsername(("Player Test"));
 
         championship = new Championship();
         championship.setId(10L);

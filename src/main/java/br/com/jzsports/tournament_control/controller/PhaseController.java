@@ -1,6 +1,6 @@
 package br.com.jzsports.tournament_control.controller;
 
-import br.com.jzsports.tournament_control.model.dto.PhaseDTO;
+import br.com.jzsports.tournament_control.model.dto.phase.PhaseDTO;
 import br.com.jzsports.tournament_control.model.entity.Phase;
 import br.com.jzsports.tournament_control.service.PhaseService;
 import lombok.RequiredArgsConstructor;

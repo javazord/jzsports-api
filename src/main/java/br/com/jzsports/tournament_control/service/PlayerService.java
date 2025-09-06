@@ -1,6 +1,7 @@
 package br.com.jzsports.tournament_control.service;
 
-import br.com.jzsports.tournament_control.model.dto.PlayerDTO;
+import br.com.jzsports.tournament_control.model.dto.player.PlayerDTO;
+import br.com.jzsports.tournament_control.model.dto.player.PlayerProfDTO;
 import br.com.jzsports.tournament_control.model.entity.Player;
 import br.com.jzsports.tournament_control.model.mapper.PlayerMapper;
 import br.com.jzsports.tournament_control.repository.PlayerRepository;
@@ -32,6 +33,13 @@ public class PlayerService {
     public PlayerDTO update(Long id, PlayerDTO playerDTO) {
         Player existing = playerRepository.findById(id).orElseThrow(() -> new RuntimeException("Player not found with id " + id));
         playerMapper.updatePlayer(playerDTO, existing);
+        Player updated = playerRepository.save(existing);
+        return playerMapper.toDto(updated);
+    }
+
+    public PlayerDTO updateProfile(Long id, PlayerProfDTO playerProfDTO) {
+        Player existing = playerRepository.findById(id).orElseThrow(() -> new RuntimeException("Player not found with id " + id));
+        playerMapper.updatePlayerProfile(playerProfDTO, existing);
         Player updated = playerRepository.save(existing);
         return playerMapper.toDto(updated);
     }

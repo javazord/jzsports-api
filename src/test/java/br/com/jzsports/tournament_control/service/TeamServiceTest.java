@@ -1,7 +1,7 @@
 package br.com.jzsports.tournament_control.service;
 
-import br.com.jzsports.tournament_control.model.dto.TeamDTO;
-import br.com.jzsports.tournament_control.model.dto.TeamRequestDTO;
+import br.com.jzsports.tournament_control.model.dto.team.TeamDTO;
+import br.com.jzsports.tournament_control.model.dto.team.TeamRequestDTO;
 import br.com.jzsports.tournament_control.model.entity.Player;
 import br.com.jzsports.tournament_control.model.entity.Team;
 import br.com.jzsports.tournament_control.model.mapper.TeamMapper;

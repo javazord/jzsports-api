@@ -1,6 +1,6 @@
 package br.com.jzsports.tournament_control.service;
 
-import br.com.jzsports.tournament_control.model.dto.PhaseDTO;
+import br.com.jzsports.tournament_control.model.dto.phase.PhaseDTO;
 import br.com.jzsports.tournament_control.model.e.EMatchStatus;
 import br.com.jzsports.tournament_control.model.e.ETypePhase;
 import br.com.jzsports.tournament_control.model.entity.*;

@@ -1,6 +1,6 @@
 package br.com.jzsports.tournament_control.model.mapper;
 
-import br.com.jzsports.tournament_control.model.dto.ChampionshipDTO;
+import br.com.jzsports.tournament_control.model.dto.championship.ChampionshipDTO;
 import br.com.jzsports.tournament_control.model.entity.Championship;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;

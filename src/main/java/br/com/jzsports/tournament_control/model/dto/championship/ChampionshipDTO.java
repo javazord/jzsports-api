@@ -1,4 +1,6 @@
-package br.com.jzsports.tournament_control.model.dto;
+package br.com.jzsports.tournament_control.model.dto.championship;
+import br.com.jzsports.tournament_control.model.dto.team.TeamDTO;
+import br.com.jzsports.tournament_control.model.dto.player.PlayerSimpleDTO;
 import lombok.Data;
 import java.time.LocalDate;
 import java.util.List;

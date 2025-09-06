@@ -1,21 +1,21 @@
-package br.com.jzsports.tournament_control.model.dto;
+package br.com.jzsports.tournament_control.model.dto.team;
+
+import br.com.jzsports.tournament_control.model.dto.championship.ChampionshipDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TeamDTO {
+public class TeamRequestDTO {
 
     private Long id;
     private String teamName;
     private String photoURL;
-    private LocalDate createdAt;
-    private List<PlayerDTO> players;
+    private List<Long> idPlayersList;
     private List<ChampionshipDTO> championship;
 
 }

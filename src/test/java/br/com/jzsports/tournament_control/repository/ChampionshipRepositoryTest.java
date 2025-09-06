@@ -1,9 +1,8 @@
 package br.com.jzsports.tournament_control.repository;
 
-import br.com.jzsports.tournament_control.model.dto.ChampionshipDTO;
+import br.com.jzsports.tournament_control.model.dto.championship.ChampionshipDTO;
 import br.com.jzsports.tournament_control.model.entity.Championship;
 import br.com.jzsports.tournament_control.model.entity.Player;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
