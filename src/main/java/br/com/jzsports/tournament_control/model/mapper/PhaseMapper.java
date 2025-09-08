@@ -4,7 +4,7 @@ import br.com.jzsports.tournament_control.model.entity.Phase;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring", uses = {TeamMapper.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", uses = {MatchMapper.class}, builder = @Builder(disableBuilder = true))
 public interface PhaseMapper {
     PhaseDTO toDto(Phase phase);
     Phase toEntity(PhaseDTO phaseDTO);

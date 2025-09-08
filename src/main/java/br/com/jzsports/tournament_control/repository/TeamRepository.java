@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface TeamRepository extends JpaRepository<Team, Long> {
     List<Team> findByTeamNameAndPlayersList_Id(String name, Long id);
+    List<Team> findByPlayersList_Id(Long id);
 }

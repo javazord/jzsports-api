@@ -6,7 +6,7 @@ import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {PlayerMapper.class, TeamMapper.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", uses = {PlayerMapper.class}, builder = @Builder(disableBuilder = true))
 public interface ChampionshipMapper {
     @Mapping(target = "createdBy", qualifiedByName = "toSimpleDto")
     ChampionshipDTO toDto(Championship championship);

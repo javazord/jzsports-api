@@ -16,5 +16,5 @@ public class PlayerDTO {
     private String photoURL;
     // Lista de campeonatos criados (opcional para evitar loop no JSON)
     @JsonIgnore
-    private List<ChampionshipDTO> championshipsCreated;
+    private List<ChampionshipDTO> championshipList;
 }

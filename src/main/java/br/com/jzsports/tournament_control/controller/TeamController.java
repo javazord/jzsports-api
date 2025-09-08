@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -31,9 +32,21 @@ public class TeamController {
         return ResponseEntity.ok(DTO);
     }
 
-    @GetMapping("all/{id}")
+    @GetMapping("/all-name/{id}")
     public ResponseEntity<List<TeamDTO>> getByNameAndPlayersList_Id(@RequestParam (value = "teamName", required = false) String teamName, @PathVariable Long id) {
         List<TeamDTO> dtoList = teamService.getAllByNameAndPlayersList_Id(teamName, id);
+        return ResponseEntity.ok(dtoList);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TeamDTO>> getByNameAndCreatedAt(@RequestParam (value = "teamName", required = false) String teamName, @RequestParam( value = "createdAt", required = false) LocalDate createdAt) {
+        List<TeamDTO> dtoList = teamService.search(teamName, createdAt);
+        return ResponseEntity.ok(dtoList);
+    }
+
+    @GetMapping("/all-player/{id}")
+    public ResponseEntity<List<TeamDTO>> getByPlayersList_Id(@PathVariable Long id) {
+        List<TeamDTO> dtoList = teamService.getAllByPlayersList_Id(id);
         return ResponseEntity.ok(dtoList);
     }
 

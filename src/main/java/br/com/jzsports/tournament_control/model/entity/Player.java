@@ -41,7 +41,7 @@ public class Player implements Serializable {
     private List<Team> teamsList;
     @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Championship> championshipsCreated;
+    private List<Championship> championshipList;
 
 
 }

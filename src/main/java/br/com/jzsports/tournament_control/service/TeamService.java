@@ -8,8 +8,12 @@ import br.com.jzsports.tournament_control.model.mapper.TeamMapper;
 import br.com.jzsports.tournament_control.repository.PlayerRepository;
 import br.com.jzsports.tournament_control.repository.TeamRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,8 +49,13 @@ public class TeamService {
         return teamMapper.toDto(team);
     }
 
-    public List<TeamDTO> getAllByNameAndPlayersList_Id(String name, Long idPlayersList) {
-        List<Team> teamList = teamRepository.findByTeamNameAndPlayersList_Id(name, idPlayersList);
+    public List<TeamDTO> getAllByNameAndPlayersList_Id(String name, Long idPlayer) {
+        List<Team> teamList = teamRepository.findByTeamNameAndPlayersList_Id(name, idPlayer);
+        return teamList.stream().map(teamMapper::toDto).collect(Collectors.toList());
+    }
+
+    public List<TeamDTO> getAllByPlayersList_Id( Long idPlayer) {
+        List<Team> teamList = teamRepository.findByPlayersList_Id(idPlayer);
         return teamList.stream().map(teamMapper::toDto).collect(Collectors.toList());
     }
 
@@ -65,6 +74,16 @@ public class TeamService {
         return teamMapper.toDto(updated);
     }
 
+    public List<TeamDTO> search(String teamName, LocalDate createdAt) {
+        Team team = new Team();
+        team.setTeamName(teamName);
+        team.setCreatedAt(createdAt);
+        Example<Team> example = Example.of(team, ExampleMatcher.matching().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING));
+        List<Team> teamList = teamRepository.findAll(example);
+        List<TeamDTO> teamDTOList = teamMapper.toDtoList(teamList);
+        Collections.reverse(teamList);
+        return teamDTOList;
+    }
 
 
 }

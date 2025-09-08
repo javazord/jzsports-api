@@ -17,7 +17,7 @@ public class TeamDTO {
     private String teamName;
     private String photoURL;
     private LocalDate createdAt;
-    private List<PlayerDTO> players;
-    private List<ChampionshipDTO> championship;
+    private List<PlayerDTO> playersList;
+    private List<ChampionshipDTO> championshipList;
 
 }
