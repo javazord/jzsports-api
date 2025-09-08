@@ -6,6 +6,9 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = {MatchMapper.class}, builder = @Builder(disableBuilder = true))
 public interface PhaseMapper {
+
     PhaseDTO toDto(Phase phase);
+
     Phase toEntity(PhaseDTO phaseDTO);
+
 }

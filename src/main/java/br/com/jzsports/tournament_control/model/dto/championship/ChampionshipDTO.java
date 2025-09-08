@@ -1,6 +1,8 @@
 package br.com.jzsports.tournament_control.model.dto.championship;
 import br.com.jzsports.tournament_control.model.dto.team.TeamDTO;
 import br.com.jzsports.tournament_control.model.dto.player.PlayerSimpleDTO;
+import br.com.jzsports.tournament_control.model.e.EChampionshipStatus;
+import br.com.jzsports.tournament_control.model.e.ETypeChampionship;
 import lombok.Data;
 import java.time.LocalDate;
 import java.util.List;
@@ -10,7 +12,8 @@ public class ChampionshipDTO {
 
     private Long id;
     private String name;
-    private String type;
+    private ETypeChampionship type;
+    private EChampionshipStatus status;
     private LocalDate startDate;
     private LocalDate endDate;
 

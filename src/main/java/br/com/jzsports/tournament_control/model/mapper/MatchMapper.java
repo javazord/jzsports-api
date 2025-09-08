@@ -7,6 +7,9 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = {PlayerMapper.class, ChampionshipMapper.class}, builder = @Builder(disableBuilder = true))
 public interface MatchMapper {
+
     MatchDTO toDto(Team team);
+
     Team toEntity(MatchDTO dto);
+
 }

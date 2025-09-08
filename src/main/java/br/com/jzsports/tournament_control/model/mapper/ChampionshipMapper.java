@@ -8,8 +8,10 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = {PlayerMapper.class}, builder = @Builder(disableBuilder = true))
 public interface ChampionshipMapper {
+
     @Mapping(target = "createdBy", qualifiedByName = "toSimpleDto")
     ChampionshipDTO toDto(Championship championship);
+
     Championship toEntity(ChampionshipDTO championshipDTO);
 
 }

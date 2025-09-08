@@ -22,25 +22,34 @@ public class Player implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String username;
+
     @Column(nullable = false, unique = true, length = 12)
     private String nickname;
+
     @Column(nullable = false)
     private String password;
+
     @Column(nullable = false, unique = true)
     private String email;
+
     @Column
     private String color;
+
     @Column
     private String photoURL;
+
     @CreationTimestamp
     @Column(updatable = false) //data nao pode ser alterada após inserção
     private LocalDateTime createdAt;
+
     @ManyToMany(mappedBy = "playersList")
     private List<Team> teamsList;
-    @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, orphanRemoval = true)
+
     @JsonIgnore
+    @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Championship> championshipList;
 
 

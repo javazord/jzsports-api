@@ -21,13 +21,17 @@ public class Team implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String teamName;
+
     @Column
     private String photoURL;
+
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDate createdAt;
+
     @ManyToMany
     @JoinTable(
             name = "team_players",
@@ -35,6 +39,7 @@ public class Team implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "player_id")
     )
     private List<Player> playersList;
+
     @ManyToMany(mappedBy = "teamsList")
     private List<Championship> championshipList;
 

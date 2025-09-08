@@ -11,10 +11,15 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", uses = { PlayerMapper.class, ChampionshipMapper.class }, builder = @Builder(disableBuilder = true), config = IgnoreImmutableConfig.class)
 public interface TeamMapper {
+
     TeamDTO toDto(Team team);
+
     TeamRequestDTO toRequestDto(Team team);
+
     Team toEntity(TeamDTO teamDTO);
+
     List<TeamDTO> toDtoList(List<Team> teamList);
 
     void updateTeam(TeamRequestDTO teamRequestDTO, @MappingTarget Team team);
+
 }

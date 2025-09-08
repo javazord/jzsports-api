@@ -39,7 +39,8 @@ public class ChampionshipService {
         }
 
         championship.setChampionshipName(dto.getName());
-        championship.setType(dto.getType());
+        championship.setChampionshipType(dto.getType());
+        championship.setChampionshipStatus(dto.getStatus());
         championship.setStartDate(dto.getStartDate());
         championship.setEndDate(dto.getEndDate());
         championshipRepository.save(championship);

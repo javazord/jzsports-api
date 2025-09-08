@@ -10,6 +10,7 @@ import org.mapstruct.*;
 public interface PlayerMapper {
 
     PlayerDTO toDto(Player player);
+
     Player toEntity(PlayerDTO playerDTO);
 
     @Mapping(target = "createdAt", ignore = true)
