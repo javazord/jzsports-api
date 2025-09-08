@@ -39,8 +39,9 @@ public class TeamController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TeamDTO>> getByNameAndCreatedAt(@RequestParam (value = "teamName", required = false) String teamName, @RequestParam( value = "createdAt", required = false) LocalDate createdAt) {
-        List<TeamDTO> dtoList = teamService.search(teamName, createdAt);
+    public ResponseEntity<List<TeamDTO>> getByNameAndCreatedAt(@RequestParam (value = "teamName", required = false) String teamName, @RequestParam( value = "createdAt", required = false) LocalDate createdAt,
+                                                               @RequestParam (value = "playerId", required = false) Long playerId) {
+        List<TeamDTO> dtoList = teamService.search(teamName, createdAt, playerId);
         return ResponseEntity.ok(dtoList);
     }
 

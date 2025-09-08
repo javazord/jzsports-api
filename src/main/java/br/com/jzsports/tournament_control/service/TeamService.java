@@ -74,16 +74,13 @@ public class TeamService {
         return teamMapper.toDto(updated);
     }
 
-    public List<TeamDTO> search(String teamName, LocalDate createdAt) {
-        Team team = new Team();
-        team.setTeamName(teamName);
-        team.setCreatedAt(createdAt);
-        Example<Team> example = Example.of(team, ExampleMatcher.matching().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING));
-        List<Team> teamList = teamRepository.findAll(example);
+    public List<TeamDTO> search(String teamName, LocalDate createdAt, Long playerId) {
+        List<Team> teamList = teamRepository.searchTeams(teamName, createdAt, playerId);
         List<TeamDTO> teamDTOList = teamMapper.toDtoList(teamList);
         Collections.reverse(teamList);
         return teamDTOList;
     }
+
 
 
 }

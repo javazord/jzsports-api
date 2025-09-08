@@ -1,6 +1,8 @@
 package br.com.jzsports.tournament_control.repository;
 
 import br.com.jzsports.tournament_control.model.dto.championship.ChampionshipDTO;
+import br.com.jzsports.tournament_control.model.e.EChampionshipStatus;
+import br.com.jzsports.tournament_control.model.e.ETypeChampionship;
 import br.com.jzsports.tournament_control.model.entity.Championship;
 import br.com.jzsports.tournament_control.model.entity.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -66,7 +68,7 @@ class ChampionshipRepositoryTest {
     }
 
     public Championship createChampionship() {
-        return new Championship(null, "Championship Test", "Fifa25", LocalDate.now(), null, null, null, player);
+        return new Championship(null, "Fifa25", ETypeChampionship.FPS, EChampionshipStatus.IN_PROGRESS , LocalDate.now(), null, null, null, player);
     }
 
 }

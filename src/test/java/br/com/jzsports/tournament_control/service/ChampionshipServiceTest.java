@@ -1,6 +1,7 @@
 package br.com.jzsports.tournament_control.service;
 
 import br.com.jzsports.tournament_control.model.dto.championship.ChampionshipDTO;
+import br.com.jzsports.tournament_control.model.e.ETypeChampionship;
 import br.com.jzsports.tournament_control.model.entity.Championship;
 import br.com.jzsports.tournament_control.model.entity.Player;
 import br.com.jzsports.tournament_control.model.mapper.ChampionshipMapper;
@@ -56,7 +57,7 @@ class ChampionshipServiceTest {
         championshipDTO = new ChampionshipDTO();
         championshipDTO.setId(10L);
         championshipDTO.setName("Championship DTO");
-        championshipDTO.setType("Knockout");
+        championshipDTO.setType(ETypeChampionship.FPS);
         championshipDTO.setStartDate(LocalDate.of(2025, 1, 1));
         championshipDTO.setEndDate(LocalDate.of(2025, 1, 10));
     }

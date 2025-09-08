@@ -1,6 +1,8 @@
 package br.com.jzsports.tournament_control.repository;
 
+import br.com.jzsports.tournament_control.model.e.EChampionshipStatus;
 import br.com.jzsports.tournament_control.model.e.EMatchStatus;
+import br.com.jzsports.tournament_control.model.e.ETypeChampionship;
 import br.com.jzsports.tournament_control.model.e.ETypePhase;
 import br.com.jzsports.tournament_control.model.entity.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -113,7 +116,7 @@ class PhaseRepositoryTest {
     }
 
     private Championship createChampionship() {
-        return new Championship(null, "Championship1", "Fifa", null, null, null, null, player);
+        return new Championship(null, "Fifa25", ETypeChampionship.FPS, EChampionshipStatus.IN_PROGRESS , LocalDate.now(), null, null, null, player);
     }
 
     private Phase createPhase() {
