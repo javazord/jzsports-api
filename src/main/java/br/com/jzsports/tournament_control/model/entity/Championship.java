@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -34,7 +35,8 @@ public class Championship implements Serializable {
     @Enumerated(EnumType.STRING)
     private EChampionshipStatus championshipStatus;
 
-    @Column
+    @CreationTimestamp
+    @Column(updatable = false)
     private LocalDate startDate;
 
     @Column
