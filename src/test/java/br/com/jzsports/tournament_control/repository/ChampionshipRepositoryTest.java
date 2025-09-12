@@ -48,7 +48,7 @@ class ChampionshipRepositoryTest {
                 .hasSize(1)
                 .allSatisfy(ch -> {
                     assertThat(ch.getCreatedBy().getId()).isEqualTo(player.getId());
-                    assertThat(ch.getName()).isEqualTo("Championship Test");
+                    assertThat(ch.getChampionshipName()).isEqualTo("Championship Test");
                 });
     }
 

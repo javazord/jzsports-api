@@ -11,9 +11,9 @@ import java.util.List;
 public class ChampionshipDTO {
 
     private Long id;
-    private String name;
-    private ETypeChampionship type;
-    private EChampionshipStatus status;
+    private String championshipName;
+    private ETypeChampionship championshipType;
+    private EChampionshipStatus championshipStatus;
     private LocalDate startDate;
     private LocalDate endDate;
 

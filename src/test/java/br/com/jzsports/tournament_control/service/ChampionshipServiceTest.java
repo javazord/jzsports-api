@@ -56,8 +56,8 @@ class ChampionshipServiceTest {
 
         championshipDTO = new ChampionshipDTO();
         championshipDTO.setId(10L);
-        championshipDTO.setName("Championship DTO");
-        championshipDTO.setType(ETypeChampionship.FPS);
+        championshipDTO.setChampionshipName("Championship DTO");
+        championshipDTO.setChampionshipType(ETypeChampionship.FPS);
         championshipDTO.setStartDate(LocalDate.of(2025, 1, 1));
         championshipDTO.setEndDate(LocalDate.of(2025, 1, 10));
     }
@@ -72,7 +72,7 @@ class ChampionshipServiceTest {
         ChampionshipDTO result = championshipService.save(championship);
 
         assertThat(result).isNotNull();
-        assertThat(result.getName()).isEqualTo("Championship DTO");
+        assertThat(result.getChampionshipName()).isEqualTo("Championship DTO");
         verify(playerRepository).findById(1L);
         verify(championshipMapper).toDto(championship);
     }
@@ -99,8 +99,8 @@ class ChampionshipServiceTest {
 
         ChampionshipDTO result = championshipService.updateChampionship(10L, player, championshipDTO);
 
-        assertThat(result.getName()).isEqualTo("Championship DTO");
-        assertThat(result.getType()).isEqualTo("Knockout");
+        assertThat(result.getChampionshipName()).isEqualTo("Championship DTO");
+        assertThat(result.getChampionshipType()).isEqualTo("Knockout");
         assertThat(result.getStartDate()).isEqualTo(LocalDate.of(2025, 1, 1));
         verify(championshipRepository).save(championship);
     }
@@ -142,7 +142,7 @@ class ChampionshipServiceTest {
         List<ChampionshipDTO> result = championshipService.getChampionshipsByPlayer(1L);
 
         assertThat(result).hasSize(1);
-        assertThat(result.get(0).getName()).isEqualTo("Championship Test");
+        assertThat(result.get(0).getChampionshipName()).isEqualTo("Championship Test");
         verify(championshipRepository).findByCreatedBy_Id(1L);
     }
 }

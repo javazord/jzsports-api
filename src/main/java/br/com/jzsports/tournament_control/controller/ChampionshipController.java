@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/api/championships")
 public class ChampionshipController {
 
-    private ChampionshipService championshipService;
+    private final ChampionshipService championshipService;
 
     @PostMapping
     public ResponseEntity<?> createChampionship(@RequestBody Championship champ){
