@@ -1,6 +1,6 @@
 package br.com.jzsports.tournament_control.model.mapper;
 import br.com.jzsports.tournament_control.model.dto.player.PlayerDTO;
-import br.com.jzsports.tournament_control.model.dto.player.PlayerProfDTO;
+import br.com.jzsports.tournament_control.model.dto.player.PlayerProfileDTO;
 import br.com.jzsports.tournament_control.model.dto.player.PlayerSimpleDTO;
 import br.com.jzsports.tournament_control.model.entity.Player;
 import br.com.jzsports.tournament_control.model.mapper.config.IgnoreImmutableConfig;
@@ -17,7 +17,7 @@ public interface PlayerMapper {
     void updatePlayer(PlayerDTO playerDTO, @MappingTarget Player player);
 
     @Mapping(target = "createdAt", ignore = true)
-    void updatePlayerProfile(PlayerProfDTO playerProfDTO, @MappingTarget Player player);
+    void updatePlayerProfile(PlayerProfileDTO playerProfileDTO, @MappingTarget Player player);
 
     @Named("toSimpleDto")
     PlayerSimpleDTO toSimpleDto(Player player);

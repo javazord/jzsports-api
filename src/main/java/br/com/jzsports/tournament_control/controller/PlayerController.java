@@ -1,7 +1,7 @@
 package br.com.jzsports.tournament_control.controller;
 
 import br.com.jzsports.tournament_control.model.dto.player.PlayerDTO;
-import br.com.jzsports.tournament_control.model.dto.player.PlayerProfDTO;
+import br.com.jzsports.tournament_control.model.dto.player.PlayerProfileDTO;
 import br.com.jzsports.tournament_control.model.entity.Player;
 import br.com.jzsports.tournament_control.service.PlayerService;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +31,8 @@ public class PlayerController {
     }
 
     @PutMapping("/{id}/player-profile")
-    public ResponseEntity<?> updatePlayerProfile(@PathVariable Long id, @RequestBody PlayerProfDTO playerProfDTO) {
-        PlayerDTO DTO = playerService.updateProfile(id, playerProfDTO);
+    public ResponseEntity<?> updatePlayerProfile(@PathVariable Long id, @RequestBody PlayerProfileDTO playerProfileDTO) {
+        PlayerDTO DTO = playerService.updateProfile(id, playerProfileDTO);
         return ResponseEntity.ok(DTO);
     }
 

@@ -18,7 +18,7 @@ public enum ETypePhase {
      */
     public static ETypePhase fromTeamCount(int teamCount) {
         return switch (teamCount) {
-            case 2 -> FINAL;
+            case 1, 2 -> FINAL;
             case 4 -> SEMI_FINAL;
             case 8 -> QUARTER_FINAL;
             case 16 -> ROUND_OF_16;
