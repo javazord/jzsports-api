@@ -43,6 +43,10 @@ public class Match implements Serializable {
     private EMatchStatus status;
 
     @ManyToOne
+    @JoinColumn(name = "winner_id")
+    private Team winner;
+
+    @ManyToOne
     @JoinColumn(name = "phase_id", nullable = false)
     private Phase phase;
 

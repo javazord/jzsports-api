@@ -35,7 +35,7 @@ public class MatchService {
             byeMatch.setScoreTeamOne(0);
             byeMatch.setScoreTeamTwo(null);
             // Vencedor automático
-            phase.setWinner(byeTeam); // opcional se quiser registrar na Phase
+            byeMatch.setWinner(byeTeam); // opcional se quiser registrar na Phase
             matches.add(byeMatch);
         }
 
@@ -43,6 +43,8 @@ public class MatchService {
         for (int i = 0; i < teams.size(); i += 2) {
             Match match = new Match();
             match.setPhase(phase);
+            match.setScoreTeamOne(0);
+            match.setScoreTeamTwo(0);
             match.setChampionship(phase.getChampionship());
             match.setTeamOne(teams.get(i));
             if (i + 1 < teams.size()) {

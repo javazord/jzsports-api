@@ -2,9 +2,9 @@ package br.com.jzsports.tournament_control.model.mapper;
 
 import br.com.jzsports.tournament_control.model.dto.championship.ChampionshipDTO;
 import br.com.jzsports.tournament_control.model.entity.Championship;
-import org.mapstruct.Builder;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring", uses = {PlayerMapper.class}, builder = @Builder(disableBuilder = true))
 public interface ChampionshipMapper {
@@ -14,4 +14,12 @@ public interface ChampionshipMapper {
 
     Championship toEntity(ChampionshipDTO championshipDTO);
 
+    List<ChampionshipDTO> toDtoList(List<Championship> championship);
+
+    @AfterMapping
+    default void fillPhotoUrl(Championship championship, @MappingTarget ChampionshipDTO dto) {
+        if (championship.getCreatedBy() != null && dto.getCreatedBy() != null) {
+            dto.getCreatedBy().setPhotoURL(championship.getCreatedBy().getPhotoURL());
+        }
+    }
 }

@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface PhaseRepository extends JpaRepository<Phase, Long> {
     List<Phase> findByChampionship_IdAndPhase(Long championshipId, ETypePhase phase);
+    Phase findByChampionship_Id(Long championshipId);
 }

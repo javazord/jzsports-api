@@ -120,11 +120,11 @@ class PhaseRepositoryTest {
     }
 
     private Phase createPhase() {
-        return new Phase(null, ETypePhase.FINAL, null, championship, matchList);
+        return new Phase(null, ETypePhase.FINAL, null, matchList);
     }
 
     private List<Match> createMatches() {
-        return Collections.singletonList(new Match(null, 0, 0, championship, teamOne, teamTwo, EMatchStatus.IN_PROGRESS, phase, null));
+        return Collections.singletonList(new Match(null, 0, 0, championship, teamOne, teamTwo, EMatchStatus.IN_PROGRESS, null,  null, null));
     }
 
 

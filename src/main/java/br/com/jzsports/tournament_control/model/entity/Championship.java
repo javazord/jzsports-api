@@ -3,10 +3,7 @@ package br.com.jzsports.tournament_control.model.entity;
 import br.com.jzsports.tournament_control.model.e.EChampionshipStatus;
 import br.com.jzsports.tournament_control.model.e.ETypeChampionship;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
@@ -48,13 +45,16 @@ public class Championship implements Serializable {
             joinColumns = @JoinColumn(name = "championship_id"),
             inverseJoinColumns = @JoinColumn(name = "team_id")
     )
+    @ToString.Exclude
     private List<Team> teamsList;
 
     @OneToMany(mappedBy = "championship", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<Match> matchesList;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by_player_id", nullable = false)
+    @ToString.Exclude
     private Player createdBy;
 
 }

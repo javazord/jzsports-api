@@ -87,8 +87,12 @@ public class ChampionshipService {
         return championshipMapper.toDto(championship);
     }
 
-    public List<ChampionshipDTO> getChampionshipsByPlayer(Long playerId) {
+    public List<ChampionshipDTO> getChampionshipsByCreatedBy(Long playerId) {
         return championshipRepository.findByCreatedBy_Id(playerId);
+    }
+
+    public List<Championship> getByPlayerIncluded(Long playerId) {
+        return championshipRepository.findByPlayerIncluded(playerId);
     }
 
     public Championship getChampionshipById(Long championshipId) {

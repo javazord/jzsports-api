@@ -24,8 +24,8 @@ public class PhaseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PhaseDTO> getPhase(@PathVariable Long id) {
-        PhaseDTO dto = phaseService.findById(id);
+    public ResponseEntity<PhaseDTO> getByChampionshipId(@PathVariable Long id) {
+        PhaseDTO dto = phaseService.findByChampionshipId(id);
         return ResponseEntity.ok().body(dto);
     }
 

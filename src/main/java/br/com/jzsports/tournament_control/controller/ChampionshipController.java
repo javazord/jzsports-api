@@ -3,6 +3,7 @@ package br.com.jzsports.tournament_control.controller;
 import br.com.jzsports.tournament_control.model.dto.championship.ChampionshipDTO;
 import br.com.jzsports.tournament_control.model.dto.championship.ChampionshipRequestDTO;
 import br.com.jzsports.tournament_control.model.entity.Championship;
+import br.com.jzsports.tournament_control.model.mapper.ChampionshipMapper;
 import br.com.jzsports.tournament_control.service.ChampionshipService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.List;
 public class ChampionshipController {
 
     private final ChampionshipService championshipService;
+    private final ChampionshipMapper championshipMapper;
 
     @PostMapping
     public ResponseEntity<?> createChampionship(@RequestBody Championship champ){
@@ -30,10 +32,17 @@ public class ChampionshipController {
         return ResponseEntity.ok(championshipDTO);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getChampionshipByPlayer(@RequestBody Championship champ){
-        List<ChampionshipDTO> dto = championshipService.getChampionshipsByPlayer(champ.getCreatedBy().getId());
+    @GetMapping("/{id}/createdBy")
+    public ResponseEntity<?> getChampionshipByCreated(@RequestBody Championship champ){
+        List<ChampionshipDTO> dto = championshipService.getChampionshipsByCreatedBy(champ.getCreatedBy().getId());
         return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getChampionshipPlayerIncluded(@PathVariable Long id){
+        List<Championship> championship = championshipService.getByPlayerIncluded(id);
+        List<ChampionshipDTO> dtoList = championshipMapper.toDtoList(championship);
+        return ResponseEntity.ok(dtoList);
     }
 
 }

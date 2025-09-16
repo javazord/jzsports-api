@@ -2,10 +2,7 @@ package br.com.jzsports.tournament_control.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
@@ -26,7 +23,7 @@ public class Player implements Serializable {
     @Column(nullable = false)
     private String username;
 
-    @Column(nullable = false, unique = true, length = 12)
+    @Column(nullable = false, unique = true)
     private String nickname;
 
     @Column(nullable = false)
@@ -46,10 +43,12 @@ public class Player implements Serializable {
     private LocalDateTime createdAt;
 
     @ManyToMany(mappedBy = "playersList")
+    @ToString.Exclude
     private List<Team> teamsList;
 
     @JsonIgnore
     @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<Championship> championshipList;
 
 

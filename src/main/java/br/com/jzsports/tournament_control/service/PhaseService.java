@@ -81,8 +81,8 @@ public class PhaseService {
         phaseRepository.save(nextPhaseEntity);
     }
 
-    public PhaseDTO findById(Long id) {
-        Phase phase = phaseRepository.findById(id).orElseThrow(() -> new RuntimeException("Phase not found"));
+    public PhaseDTO findByChampionshipId(Long id) {
+        Phase phase = phaseRepository.findByChampionship_Id(id);
         return phaseMapper.toDto(phase);
     }
 

@@ -139,7 +139,7 @@ class ChampionshipServiceTest {
     void getChampionshipsByPlayer() {
         when(championshipRepository.findByCreatedBy_Id(1L)).thenReturn(List.of(championshipDTO));
 
-        List<ChampionshipDTO> result = championshipService.getChampionshipsByPlayer(1L);
+        List<ChampionshipDTO> result = championshipService.getChampionshipsByCreatedBy(1L);
 
         assertThat(result).hasSize(1);
         assertThat(result.get(0).getChampionshipName()).isEqualTo("Championship Test");

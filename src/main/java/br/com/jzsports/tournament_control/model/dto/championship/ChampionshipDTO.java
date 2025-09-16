@@ -18,7 +18,6 @@ public class ChampionshipDTO {
     private EChampionshipStatus championshipStatus;
     private LocalDate startDate;
     private LocalDate endDate;
-    private List<PhaseDTO> phases;
-    // Jogador que criou o campeonato (somente ID e nome para evitar loop)
     private PlayerSimpleDTO createdBy;
+    private List<TeamDTO> teamList;
 }

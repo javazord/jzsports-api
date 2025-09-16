@@ -129,7 +129,7 @@ class PhaseServiceTest {
         PhaseDTO dto = new PhaseDTO();
         when(phaseMapper.toDto(currentPhase)).thenReturn(dto);
 
-        PhaseDTO result = phaseService.findById(99L);
+        PhaseDTO result = phaseService.findByChampionshipId(99L);
 
         assertThat(result).isNotNull();
         verify(phaseMapper).toDto(currentPhase);
@@ -155,11 +155,11 @@ class PhaseServiceTest {
     }
 
     public Match createMatch() {
-        return new Match(null, 2, 1, championship, teamA, teamB, EMatchStatus.FINISHED, currentPhase, null);
+        return new Match(null, 2, 1, championship, teamA, teamB, EMatchStatus.FINISHED, null, currentPhase, null);
     }
 
     public Phase getCurrentPhase() {
-        return new Phase(null, ETypePhase.QUARTER_FINAL, teamA, championship, null);
+        return new Phase(null, ETypePhase.QUARTER_FINAL, championship, null);
     }
 
 }
