@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface PhaseRepository extends JpaRepository<Phase, Long> {
-    List<Phase> findByChampionship_IdAndPhase(Long championshipId, ETypePhase phase);
+    List<Phase> findByChampionship_IdAndPhaseType(Long championshipId, ETypePhase phase);
     Phase findByChampionship_Id(Long championshipId);
 }

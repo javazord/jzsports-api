@@ -32,11 +32,11 @@ public class ChampionshipController {
         return ResponseEntity.ok(championshipDTO);
     }
 
-    @GetMapping("/{id}/createdBy")
-    public ResponseEntity<?> getChampionshipByCreated(@RequestBody Championship champ){
-        List<ChampionshipDTO> dto = championshipService.getChampionshipsByCreatedBy(champ.getCreatedBy().getId());
-        return ResponseEntity.ok(dto);
-    }
+//    @GetMapping("/{id}/createdBy")
+//    public ResponseEntity<?> getChampionshipByCreated(@RequestBody Championship champ){
+//        List<ChampionshipDTO> dto = championshipService.getChampionshipsByCreatedBy(champ.getCreatedBy().getId());
+//        return ResponseEntity.ok(dto);
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getChampionshipPlayerIncluded(@PathVariable Long id){

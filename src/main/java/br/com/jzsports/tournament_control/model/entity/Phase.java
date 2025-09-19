@@ -20,7 +20,7 @@ public class Phase implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ETypePhase phase;
+    private ETypePhase phaseType;
 
     @ManyToOne
     @JoinColumn(name = "championship_id", nullable = false)

@@ -35,7 +35,7 @@ public class PhaseService {
         Championship championship = championshipRepository.findById(championshipId)
                 .orElseThrow(() -> new RuntimeException("Championship not found"));
 
-        Phase currentPhaseEntity = phaseRepository.findByChampionship_IdAndPhase(championshipId, currentPhase)
+        Phase currentPhaseEntity = phaseRepository.findByChampionship_IdAndPhaseType(championshipId, currentPhase)
                 .stream()
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Current phase not found"));
@@ -69,7 +69,7 @@ public class PhaseService {
 
         Phase nextPhaseEntity = new Phase();
         nextPhaseEntity.setChampionship(championship);
-        nextPhaseEntity.setPhase(nextPhaseType);
+        nextPhaseEntity.setPhaseType(nextPhaseType);
         nextPhaseEntity.setMatchesList(new ArrayList<>());
 
         phaseRepository.save(nextPhaseEntity);

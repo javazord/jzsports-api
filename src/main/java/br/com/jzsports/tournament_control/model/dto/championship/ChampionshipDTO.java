@@ -14,8 +14,8 @@ public class ChampionshipDTO {
 
     private Long id;
     private String championshipName;
-    private ETypeChampionship championshipType;
-    private EChampionshipStatus championshipStatus;
+    private String championshipTypeDescription;
+    private String championshipStatusDescription;
     private LocalDate startDate;
     private LocalDate endDate;
     private PlayerSimpleDTO createdBy;

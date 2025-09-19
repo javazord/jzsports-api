@@ -74,7 +74,7 @@ class PhaseServiceTest {
         currentPhase.setMatchesList(List.of(match));
 
         when(championshipRepository.findById(1L)).thenReturn(Optional.of(championship));
-        when(phaseRepository.findByChampionship_IdAndPhase(1L, ETypePhase.QUARTER_FINAL))
+        when(phaseRepository.findByChampionship_IdAndPhaseType(1L, ETypePhase.QUARTER_FINAL))
                 .thenReturn(List.of(currentPhase));
         when(matchService.getWinner(match)).thenReturn(teamA);
         when(phaseRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
@@ -95,7 +95,7 @@ class PhaseServiceTest {
         currentPhase.setMatchesList(List.of(match));
 
         when(championshipRepository.findById(1L)).thenReturn(Optional.of(championship));
-        when(phaseRepository.findByChampionship_IdAndPhase(1L, ETypePhase.QUARTER_FINAL))
+        when(phaseRepository.findByChampionship_IdAndPhaseType(1L, ETypePhase.QUARTER_FINAL))
                 .thenReturn(List.of(currentPhase));
 
         assertThatThrownBy(() -> phaseService.generateNextPhase(1L, ETypePhase.QUARTER_FINAL))
@@ -109,11 +109,11 @@ class PhaseServiceTest {
         currentPhase.setMatchesList(List.of());
 
         when(championshipRepository.findById(1L)).thenReturn(Optional.of(championship));
-        when(phaseRepository.findByChampionship_IdAndPhase(1L, ETypePhase.FINAL))
+        when(phaseRepository.findByChampionship_IdAndPhaseType(1L, ETypePhase.FINAL))
                 .thenReturn(List.of(currentPhase));
 
         // seta a fase final, que já é naturalmente "última"
-        currentPhase.setPhase(ETypePhase.FINAL);
+        currentPhase.setPhaseType(ETypePhase.FINAL);
 
         assertThatThrownBy(() -> phaseService.generateNextPhase(1L, ETypePhase.FINAL))
                 .isInstanceOf(RuntimeException.class)

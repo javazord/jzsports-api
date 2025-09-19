@@ -2,6 +2,7 @@ package br.com.jzsports.tournament_control.service;
 
 import br.com.jzsports.tournament_control.model.dto.championship.ChampionshipDTO;
 import br.com.jzsports.tournament_control.model.e.EChampionshipStatus;
+import br.com.jzsports.tournament_control.model.e.ETypeChampionship;
 import br.com.jzsports.tournament_control.model.e.ETypePhase;
 import br.com.jzsports.tournament_control.model.entity.Championship;
 import br.com.jzsports.tournament_control.model.entity.Match;
@@ -56,7 +57,7 @@ public class ChampionshipService {
         // 🔹 Cria fase inicial
         Phase firstPhase = new Phase();
         firstPhase.setChampionship(savedChampionship);
-        firstPhase.setPhase(firstPhaseType);
+        firstPhase.setPhaseType(firstPhaseType);
 
         phaseRepository.save(firstPhase);
 
@@ -79,8 +80,8 @@ public class ChampionshipService {
         }
 
         championship.setChampionshipName(dto.getChampionshipName());
-        championship.setChampionshipType(dto.getChampionshipType());
-        championship.setChampionshipStatus(dto.getChampionshipStatus());
+        championship.setChampionshipType(ETypeChampionship.valueOf(dto.getChampionshipTypeDescription()));
+        championship.setChampionshipStatus(EChampionshipStatus.valueOf(dto.getChampionshipStatusDescription()));
         championship.setStartDate(dto.getStartDate());
         championship.setEndDate(dto.getEndDate());
         championshipRepository.save(championship);

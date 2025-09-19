@@ -16,7 +16,7 @@ public class MatchDTO {
     private TeamDTO teamTwo;
     private Integer scoreTeamOne;
     private Integer scoreTeamTwo;
-    private EMatchStatus status;
+    private String statusDescription;
     private TeamDTO cancellingTeam;
 
 }

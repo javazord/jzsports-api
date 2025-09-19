@@ -1,11 +1,19 @@
 package br.com.jzsports.tournament_control.model.e;
 
+import lombok.Getter;
+
+@Getter
 public enum ETypePhase {
-    GROUP, //
-    ROUND_OF_16, //oitavas
-    QUARTER_FINAL, // 8 times
-    SEMI_FINAL, // 2x2
-    FINAL; //1x1
+    GROUP("Group"), //
+    ROUND_OF_16("Round of 16"), //oitavas
+    QUARTER_FINAL("Quarter Final"), // 8 times
+    SEMI_FINAL("Semi Final"), // 2x2
+    FINAL("Final"); //1x1
+
+    private final String description;
+    ETypePhase(String description) {
+        this.description = description;
+    }
 
     /**
      * Define a próxima fase com base na quantidade de times classificados.

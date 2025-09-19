@@ -18,7 +18,7 @@ public class PhaseController {
 
     @PostMapping("/{id}")
     public ResponseEntity<?> createPhase(@RequestBody Phase phase, @PathVariable Long id) {
-        phaseService.generateNextPhase(id, phase.getPhase());
+        phaseService.generateNextPhase(id, phase.getPhaseType());
         PhaseDTO dto = phaseMapper.toDto(phase);
         return ResponseEntity.ok(dto);
     }

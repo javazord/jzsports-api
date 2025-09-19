@@ -11,9 +11,11 @@ import java.util.List;
 public interface ChampionshipRepository extends JpaRepository<Championship, Long> {
     List<ChampionshipDTO> findByCreatedBy_Id(Long playerId);
 
-    @Query("SELECT DISTINCT c FROM Championship c " +
-            "JOIN c.teamsList t " +
-            "JOIN t.playersList p " +
-            "WHERE p.id = :playerId")
+    @Query("""
+    SELECT DISTINCT c FROM Championship c
+    JOIN FETCH c.teamsList t
+    JOIN FETCH t.playersList p
+    WHERE p.id = :playerId
+""")
     List<Championship> findByPlayerIncluded(Long playerId);
 }

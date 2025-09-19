@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum EChampionshipStatus {
     IN_PROGRESS("In Progress"),
     FINISHED("Finished"),
-    CANCELLED("Cancelled"),;
+    CANCELLED("Cancelled");
 
     private final String description;
 

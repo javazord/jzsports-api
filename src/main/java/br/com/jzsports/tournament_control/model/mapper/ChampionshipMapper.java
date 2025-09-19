@@ -9,6 +9,8 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {PlayerMapper.class}, builder = @Builder(disableBuilder = true))
 public interface ChampionshipMapper {
 
+    @Mapping(target = "championshipTypeDescription", source = "championshipType.description")
+    @Mapping(target = "championshipStatusDescription", source = "championshipStatus.description")
     @Mapping(target = "createdBy", qualifiedByName = "toSimpleDto")
     ChampionshipDTO toDto(Championship championship);
 

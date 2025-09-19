@@ -65,21 +65,21 @@ class PhaseRepositoryTest {
 
     @Test
     @DisplayName("Should find phase by championship id")
-    void findByChampionship_IdAndPhaseCase01() {
+    void findByChampionship_IdAndPhaseTypeCase01() {
         // executa método customizado
-        List<Phase> result = phaseRepository.findByChampionship_IdAndPhase(championship.getId(), ETypePhase.FINAL);
+        List<Phase> result = phaseRepository.findByChampionship_IdAndPhaseType(championship.getId(), ETypePhase.FINAL);
 
         // valida
         assertThat(result).isNotEmpty();
         assertThat(result).hasSize(1);
-        assertThat(result.get(0).getPhase()).isEqualTo(ETypePhase.FINAL);
+        assertThat(result.get(0).getPhaseType()).isEqualTo(ETypePhase.FINAL);
         assertThat(result.get(0).getChampionship().getId()).isEqualTo(championship.getId());
     }
 
     @Test
     @DisplayName("Should return empty list when phase not exists")
-    void findByChampionship_IdAndPhaseCase02() {
-        List<Phase> result = phaseRepository.findByChampionship_IdAndPhase(championship.getId(), ETypePhase.QUARTER_FINAL);
+    void findByChampionship_IdAndPhaseTypeCase02() {
+        List<Phase> result = phaseRepository.findByChampionship_IdAndPhaseType(championship.getId(), ETypePhase.QUARTER_FINAL);
         assertThat(result).isEmpty();
     }
 
