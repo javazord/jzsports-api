@@ -1,25 +1,23 @@
 package br.com.jzsports.tournament_control.service;
 
 import br.com.jzsports.tournament_control.model.e.EMatchStatus;
-import br.com.jzsports.tournament_control.model.entity.Match;
-import br.com.jzsports.tournament_control.model.entity.Phase;
-import br.com.jzsports.tournament_control.model.entity.Team;
+import br.com.jzsports.tournament_control.model.entity.*;
 import br.com.jzsports.tournament_control.repository.MatchRepository;
+import br.com.jzsports.tournament_control.repository.MatchParticipantRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class MatchService {
 
     private final MatchRepository matchRepository;
+    private final MatchParticipantRepository matchParticipantRepository;
 
-    public MatchService(MatchRepository matchRepository) {
-        this.matchRepository = matchRepository;
-    }
-
-    // Cria partidas para uma fase (inclui bye match se necessário)
+    // 🔹 Cria partidas para uma fase (inclui bye automático)
     public List<Match> createMatchesForPhase(Phase phase, List<Team> teams) {
         List<Match> matches = new ArrayList<>();
 
@@ -30,52 +28,65 @@ public class MatchService {
             Match byeMatch = new Match();
             byeMatch.setPhase(phase);
             byeMatch.setChampionship(phase.getChampionship());
-            byeMatch.setTeamOne(byeTeam);
             byeMatch.setStatus(EMatchStatus.FINISHED);
-            byeMatch.setScoreTeamOne(0);
-            byeMatch.setScoreTeamTwo(null);
-            // Vencedor automático
-            byeMatch.setWinner(byeTeam); // opcional se quiser registrar na Phase
-            matches.add(byeMatch);
+
+            Match savedByeMatch = matchRepository.save(byeMatch);
+
+            // Participante
+            MatchParticipant participant = new MatchParticipant();
+            participant.setMatch(savedByeMatch);
+            participant.setTeam(byeTeam);
+            participant.setScore(0);
+            participant.setWinner(true);
+            matchParticipantRepository.save(participant);
+
+            matches.add(savedByeMatch);
         }
 
-        // Cria os matches normais
+        // Cria os matches normais (pares)
         for (int i = 0; i < teams.size(); i += 2) {
             Match match = new Match();
             match.setPhase(phase);
-            match.setScoreTeamOne(0);
-            match.setScoreTeamTwo(0);
             match.setChampionship(phase.getChampionship());
-            match.setTeamOne(teams.get(i));
-            if (i + 1 < teams.size()) {
-                match.setTeamTwo(teams.get(i + 1));
-            }
-            match.setStatus(EMatchStatus.IN_PROGRESS); // início padrão
-            matches.add(match);
+            match.setStatus(EMatchStatus.IN_PROGRESS);
+            Match savedMatch = matchRepository.save(match);
+
+            MatchParticipant p1 = new MatchParticipant();
+            p1.setMatch(savedMatch);
+            p1.setTeam(teams.get(i));
+            p1.setScore(0);
+
+            MatchParticipant p2 = new MatchParticipant();
+            p2.setMatch(savedMatch);
+            p2.setTeam(teams.get(i + 1));
+            p2.setScore(0);
+
+            matchParticipantRepository.saveAll(List.of(p1, p2));
+
+            matches.add(savedMatch);
         }
-        return matchRepository.saveAll(matches);
+        return matches;
     }
 
-    // Determina o vencedor de uma partida finalizada
+    // 🔹 Determina o vencedor de uma partida
     public Team getWinner(Match match) {
         if (match.getStatus() != EMatchStatus.FINISHED) {
             return null;
         }
-        if (match.getScoreTeamOne() != null && match.getScoreTeamTwo() != null) {
-            if (match.getScoreTeamOne() > match.getScoreTeamTwo()) return match.getTeamOne();
-            if (match.getScoreTeamTwo() > match.getScoreTeamOne()) return match.getTeamTwo();
-        }
-        return match.getTeamOne(); // no caso de bye, teamOne é o vencedor
+
+        return match.getParticipants().stream()
+                .filter(MatchParticipant::getWinner)
+                .map(MatchParticipant::getTeam)
+                .findFirst()
+                .orElse(null);
     }
 
-    // Determina vencedor no caso de cancelamento
-    public Team getWinnerFromCancellation(Match match) {
-        if (match.getStatus() == EMatchStatus.CANCELLED && match.getCancellingTeam() != null) {
-            return match.getTeamOne().equals(match.getCancellingTeam())
-                    ? match.getTeamTwo()
-                    : match.getTeamOne();
-        }
-        return null;
+    // 🔹 Vencedor no caso de cancelamento
+    public Team getWinnerFromCancellation(Match match, Team cancellingTeam) {
+        return match.getParticipants().stream()
+                .map(MatchParticipant::getTeam)
+                .filter(team -> !team.equals(cancellingTeam))
+                .findFirst()
+                .orElse(null);
     }
-
 }

@@ -5,12 +5,14 @@ import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {MatchMapper.class, TeamMapper.class}, builder = @Builder(disableBuilder = true))
+import java.util.List;
+
+@Mapper(componentModel = "spring", uses = {MatchMapper.class})
 public interface PhaseMapper {
 
-    @Mapping(target = "phaseTypeDescription", source = "phaseType.description")
+    @Mapping(target = "championshipId", source = "championship.id")
+    @Mapping(target = "matches", source = "matches")
     PhaseDTO toDto(Phase phase);
 
-    Phase toEntity(PhaseDTO phaseDTO);
-
+    List<PhaseDTO> toDtoList(List<Phase> phases);
 }

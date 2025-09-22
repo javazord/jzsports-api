@@ -6,12 +6,14 @@ import br.com.jzsports.tournament_control.model.entity.Player;
 import br.com.jzsports.tournament_control.model.mapper.config.IgnoreImmutableConfig;
 import org.mapstruct.*;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true), config = IgnoreImmutableConfig.class)
 public interface PlayerMapper {
 
     PlayerDTO toDto(Player player);
-
     Player toEntity(PlayerDTO playerDTO);
+    List<PlayerDTO> toDtoList(List<Player> players);
 
     @Mapping(target = "createdAt", ignore = true)
     void updatePlayer(PlayerDTO playerDTO, @MappingTarget Player player);

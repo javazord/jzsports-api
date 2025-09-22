@@ -7,12 +7,14 @@ import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {PlayerMapper.class, ChampionshipMapper.class}, builder = @Builder(disableBuilder = true))
+import java.util.List;
+
+@Mapper(componentModel = "spring", uses = {MatchParticipantMapper.class})
 public interface MatchMapper {
 
-    @Mapping(target = "statusDescription", source = "status.description")
+    @Mapping(target = "phaseId", source = "phase.id")
+    @Mapping(target = "participants", source = "participants")
     MatchDTO toDto(Match match);
 
-    Match toEntity(MatchDTO dto);
-
+    List<MatchDTO> toDtoList(List<Match> matches);
 }

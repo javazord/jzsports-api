@@ -3,6 +3,10 @@ import br.com.jzsports.tournament_control.model.dto.championship.ChampionshipDTO
 import br.com.jzsports.tournament_control.model.dto.player.PlayerDTO;
 import br.com.jzsports.tournament_control.model.dto.team.TeamDTO;
 import br.com.jzsports.tournament_control.model.e.EMatchStatus;
+import br.com.jzsports.tournament_control.model.entity.Championship;
+import br.com.jzsports.tournament_control.model.entity.MatchParticipant;
+import br.com.jzsports.tournament_control.model.entity.Phase;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
@@ -11,12 +15,9 @@ import java.util.List;
 public class MatchDTO {
 
     private Long id;
-    private ChampionshipDTO championship;
-    private TeamDTO teamOne;
-    private TeamDTO teamTwo;
-    private Integer scoreTeamOne;
-    private Integer scoreTeamTwo;
-    private String statusDescription;
-    private TeamDTO cancellingTeam;
+    private EMatchStatus status;
+    private Championship championship;
+    private Long phaseId;
+    private List<MatchParticipant> participants;
 
 }

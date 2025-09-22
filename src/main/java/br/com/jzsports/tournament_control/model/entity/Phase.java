@@ -1,8 +1,8 @@
 package br.com.jzsports.tournament_control.model.entity;
 
+import br.com.jzsports.tournament_control.model.e.ETypePhase;
 import jakarta.persistence.*;
 import lombok.*;
-import br.com.jzsports.tournament_control.model.e.ETypePhase;
 
 import java.io.Serializable;
 import java.util.List;
@@ -27,7 +27,5 @@ public class Phase implements Serializable {
     private Championship championship;
 
     @OneToMany(mappedBy = "phase", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude
-    private List<Match> matchesList;
-
+    private List<Match> matches;
 }

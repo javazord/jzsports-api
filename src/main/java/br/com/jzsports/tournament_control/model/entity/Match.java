@@ -1,12 +1,11 @@
 package br.com.jzsports.tournament_control.model.entity;
+
 import br.com.jzsports.tournament_control.model.e.EMatchStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Builder
@@ -20,38 +19,30 @@ public class Match implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private Integer scoreTeamOne;
-
-    @Column
-    private Integer scoreTeamTwo;
+    @Enumerated(EnumType.STRING)
+    private EMatchStatus status;
 
     @ManyToOne
     @JoinColumn(name = "championship_id")
     private Championship championship;
 
     @ManyToOne
-    @JoinColumn(name = "team_one_id")
-    private Team teamOne;
-
-    @ManyToOne
-    @JoinColumn(name = "team_two_id")
-    private Team teamTwo;
-
-    @Column
-    @Enumerated(EnumType.STRING)
-    private EMatchStatus status;
-
-    @ManyToOne
-    @JoinColumn(name = "winner_id")
-    private Team winner;
-
-    @ManyToOne
     @JoinColumn(name = "phase_id", nullable = false)
     private Phase phase;
 
-    @ManyToOne
-    @JoinColumn(name = "cancelling_team_id")
-    private Team cancellingTeam;
+    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MatchParticipant> participants;
+
+    public Team getCancellingTeam() {
+        return participants.stream()
+                .filter(MatchParticipant::isCancelled)
+                .map(MatchParticipant::getTeam)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Player getCancellingPlayer() {
+        return participants.stream().filter(MatchParticipant::isCancelled).map(MatchParticipant::getPlayer).findFirst().orElse(null);
+    }
 
 }

@@ -24,37 +24,30 @@ public class Championship implements Serializable {
     @Column(nullable = false)
     private String championshipName;
 
-    @Column
     @Enumerated(EnumType.STRING)
-    private ETypeChampionship  championshipType;
+    private ETypeChampionship championshipType;
 
-    @Column
     @Enumerated(EnumType.STRING)
     private EChampionshipStatus championshipStatus;
 
-    @CreationTimestamp
-    @Column(updatable = false)
-    private LocalDate startDate;
-
-    @Column
-    private LocalDate endDate;
-
-    @ManyToMany
-    @JoinTable(
-            name = "championship_teams",
-            joinColumns = @JoinColumn(name = "championship_id"),
-            inverseJoinColumns = @JoinColumn(name = "team_id")
-    )
-    @ToString.Exclude
-    private List<Team> teamsList;
-
-    @OneToMany(mappedBy = "championship", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude
-    private List<Match> matchesList;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by_player_id", nullable = false)
-    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "created_by_player_id")
     private Player createdBy;
 
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDate createdAt;
+
+    private LocalDate startDate;
+    private LocalDate endDate;
+
+    // 🔹 Times que participam do campeonato
+    @OneToMany(mappedBy = "championship", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<ChampionshipParticipant> participants;
+
+    // 🔹 Fases do campeonato
+    @OneToMany(mappedBy = "championship", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<Phase> phases;
 }

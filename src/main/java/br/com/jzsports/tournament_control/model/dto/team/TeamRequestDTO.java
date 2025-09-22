@@ -11,11 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TeamRequestDTO {
-
-    private Long id;
     private String teamName;
     private String photoURL;
-    private List<Long> idPlayersList;
-    private List<ChampionshipDTO> championship;
-
+    private List<Long> playersIds; // IDs dos jogadores que compõem o time
 }

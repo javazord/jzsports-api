@@ -21,14 +21,14 @@ public class ChampionshipController {
     private final ChampionshipMapper championshipMapper;
 
     @PostMapping
-    public ResponseEntity<?> createChampionship(@RequestBody Championship champ){
+    public ResponseEntity<?> createChampionship(@RequestBody ChampionshipDTO champ){
         ChampionshipDTO dto = championshipService.save(champ);
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateChampionship(@PathVariable Long id, @RequestBody ChampionshipRequestDTO  champ) {
-        ChampionshipDTO championshipDTO = championshipService.updateChampionship(id, champ.getLoggedPlayer(), champ.getChampionship());
+    public ResponseEntity<?> updateChampionship(@PathVariable Long id, @RequestBody ChampionshipDTO  champ) {
+        ChampionshipDTO championshipDTO = championshipService.updateChampionship(id, champ.getCreatedByPlayerId(), champ);
         return ResponseEntity.ok(championshipDTO);
     }
 
@@ -40,9 +40,8 @@ public class ChampionshipController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getChampionshipPlayerIncluded(@PathVariable Long id){
-        List<Championship> championship = championshipService.getByPlayerIncluded(id);
-        List<ChampionshipDTO> dtoList = championshipMapper.toDtoList(championship);
-        return ResponseEntity.ok(dtoList);
+        List<ChampionshipDTO> championship = championshipService.getByPlayerIncluded(id);
+        return ResponseEntity.ok(championship);
     }
 
 }

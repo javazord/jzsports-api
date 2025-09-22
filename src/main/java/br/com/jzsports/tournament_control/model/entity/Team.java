@@ -1,11 +1,14 @@
 package br.com.jzsports.tournament_control.model.entity;
 
+import br.com.jzsports.tournament_control.model.dto.team.TeamDTO;
+import br.com.jzsports.tournament_control.model.dto.team.TeamRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -29,15 +32,24 @@ public class Team implements Serializable {
     @Column(updatable = false)
     private LocalDate createdAt;
 
-    @ManyToMany
-    @JoinTable(
-            name = "team_players",
-            joinColumns = @JoinColumn(name = "team_id"),
-            inverseJoinColumns = @JoinColumn(name = "player_id")
-    )
-    private List<Player> playersList;
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<TeamMembership> memberships = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "teamsList")
-    private List<Championship> championshipList;
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<ChampionshipParticipant> championshipParticipations;
+
+    public void addMembership(Player player) {
+        TeamMembership membership = new TeamMembership();
+        membership.setPlayer(player);
+        membership.setTeam(this);
+        this.memberships.add(membership);
+    }
+
+    public void setTeamNameAndPhoto(TeamRequestDTO dto) {
+        this.teamName = dto.getTeamName();
+        this.photoURL = dto.getPhotoURL();
+    }
 
 }

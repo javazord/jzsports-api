@@ -39,17 +39,19 @@ public class Player implements Serializable {
     private String photoURL;
 
     @CreationTimestamp
-    @Column(updatable = false) //data nao pode ser alterada após inserção
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
-    @ManyToMany(mappedBy = "playersList")
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
-    private List<Team> teamsList;
+    private List<TeamMembership> memberships;
+
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<ChampionshipParticipant> championshipParticipations;
 
     @JsonIgnore
     @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
-    private List<Championship> championshipList;
-
-
+    private List<Championship> championshipsCreated;
 }

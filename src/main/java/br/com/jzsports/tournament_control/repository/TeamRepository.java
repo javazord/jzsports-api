@@ -11,14 +11,21 @@ import java.util.List;
 
 
 public interface TeamRepository extends JpaRepository<Team, Long> {
-    List<Team> findByTeamNameAndPlayersList_Id(String name, Long id);
-    List<Team> findByPlayersList_Id(Long id);
-    @Query("SELECT t FROM Team t JOIN t.playersList p " +
-            "WHERE (:teamName IS NULL OR LOWER(t.teamName) LIKE LOWER(CONCAT('%', :teamName, '%'))) " +
-            "AND (:createdAt IS NULL OR t.createdAt = :createdAt) " +
-            "AND (:playerId IS NULL OR p.id = :playerId)")
-    List<Team> searchTeams(@Param("teamName") String teamName,
-                           @Param("createdAt") LocalDate createdAt,
-                           @Param("playerId") Long playerId);
+    List<Team> findDistinctByMemberships_Player_Id(Long id);
+    // 🔹 Pesquisa flexível com filtros opcionais
+    @Query("""
+        SELECT DISTINCT t
+        FROM Team t
+        LEFT JOIN t.memberships m
+        WHERE (:teamName IS NULL OR LOWER(t.teamName) LIKE LOWER(CONCAT('%', :teamName, '%')))
+          AND (:createdAt IS NULL OR t.createdAt = :createdAt)
+          AND (:playerId IS NULL OR m.player.id = :playerId)
+    """)
+    List<Team> search(
+            @Param("teamName") String teamName,
+            @Param("createdAt") LocalDate createdAt,
+            @Param("playerId") Long playerId
+    );
+
 
 }

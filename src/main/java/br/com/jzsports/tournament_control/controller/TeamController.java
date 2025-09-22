@@ -20,42 +20,43 @@ public class TeamController {
 
     private final TeamService teamService;
 
+    // 🔹 Criar novo time
     @PostMapping
-    public ResponseEntity<?> createTeam(@RequestBody Team team) {
-        TeamDTO teamDTO = teamService.save(team);
+    public ResponseEntity<TeamDTO> createTeam(@RequestBody TeamRequestDTO dto) {
+        TeamDTO teamDTO = teamService.save(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(teamDTO);
     }
 
-    @PutMapping
-    public ResponseEntity<?> updateTeam(@RequestBody TeamRequestDTO teamRequestDTO) {
-        TeamDTO DTO = teamService.update(teamRequestDTO);
-        return ResponseEntity.ok(DTO);
+    // 🔹 Atualizar time existente
+    @PutMapping("/{id}")
+    public ResponseEntity<TeamDTO> updateTeam(@PathVariable Long id, @RequestBody TeamRequestDTO dto) {
+        TeamDTO updated = teamService.update(id, dto);
+        return ResponseEntity.ok(updated);
     }
 
-    @GetMapping("/all-name/{id}")
-    public ResponseEntity<List<TeamDTO>> getByNameAndPlayersList_Id(@RequestParam (value = "teamName", required = false) String teamName, @PathVariable Long id) {
-        List<TeamDTO> dtoList = teamService.getAllByNameAndPlayersList_Id(teamName, id);
-        return ResponseEntity.ok(dtoList);
-    }
-
+    // 🔹 Buscar todos os times filtrando por nome + jogador (via memberships)
     @GetMapping
-    public ResponseEntity<List<TeamDTO>> getByNameAndCreatedAt(@RequestParam (value = "teamName", required = false) String teamName, @RequestParam( value = "createdAt", required = false) LocalDate createdAt,
-                                                               @RequestParam (value = "playerId", required = false) Long playerId) {
+    public ResponseEntity<List<TeamDTO>> search(
+            @RequestParam(value = "teamName", required = false) String teamName,
+            @RequestParam(value = "createdAt", required = false) LocalDate createdAt,
+            @RequestParam(value = "playerId", required = false) Long playerId
+    ) {
         List<TeamDTO> dtoList = teamService.search(teamName, createdAt, playerId);
         return ResponseEntity.ok(dtoList);
     }
 
+    // 🔹 Buscar todos os times de um jogador específico
     @GetMapping("/all-player/{id}")
-    public ResponseEntity<List<TeamDTO>> getByPlayersList_Id(@PathVariable Long id) {
-        List<TeamDTO> dtoList = teamService.getAllByPlayersList_Id(id);
+    public ResponseEntity<List<TeamDTO>> getTeamsByPlayer(@PathVariable Long id) {
+        List<TeamDTO> dtoList = teamService.getAllByPlayerId(id);
         return ResponseEntity.ok(dtoList);
     }
 
+    // 🔹 Buscar time pelo ID
     @GetMapping("/{id}")
     public ResponseEntity<TeamDTO> getTeamById(@PathVariable Long id) {
-        TeamDTO DTO = teamService.findById(id);
-        return ResponseEntity.ok(DTO);
+        TeamDTO dto = teamService.findById(id);
+        return ResponseEntity.ok(dto);
     }
-
-
 }
+

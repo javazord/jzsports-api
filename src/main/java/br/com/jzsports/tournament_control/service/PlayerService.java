@@ -5,6 +5,7 @@ import br.com.jzsports.tournament_control.model.dto.player.PlayerProfileDTO;
 import br.com.jzsports.tournament_control.model.entity.Player;
 import br.com.jzsports.tournament_control.model.mapper.PlayerMapper;
 import br.com.jzsports.tournament_control.repository.PlayerRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +14,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class PlayerService {
 
-    @Autowired
-    private PlayerRepository playerRepository;
+    private final PlayerRepository playerRepository;
 
-    @Autowired
-    private PlayerMapper playerMapper;
+    private final PlayerMapper playerMapper;
 
     public PlayerDTO save(Player player) {
         boolean exists  = playerRepository.existsPlayerByEmailOrNickname(player.getEmail(), player.getNickname());
