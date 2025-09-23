@@ -1,6 +1,7 @@
 package br.com.jzsports.tournament_control.service;
 
 import br.com.jzsports.tournament_control.model.dto.phase.PhaseDTO;
+import br.com.jzsports.tournament_control.model.dto.phase.PhaseResponseDTO;
 import br.com.jzsports.tournament_control.model.e.EMatchStatus;
 import br.com.jzsports.tournament_control.model.e.ETypePhase;
 import br.com.jzsports.tournament_control.model.entity.*;
@@ -66,8 +67,8 @@ public class PhaseService {
         matchService.createMatchesForPhase(nextPhaseEntity, new ArrayList<>(winnersList));
     }
 
-    public PhaseDTO findByChampionshipId(Long id) {
+    public PhaseResponseDTO findByChampionshipId(Long id) {
         Phase phase = phaseRepository.findByChampionship_Id(id);
-        return phaseMapper.toDto(phase);
+        return phaseMapper.toResponseDto(phase);
     }
 }

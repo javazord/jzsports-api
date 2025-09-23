@@ -14,7 +14,7 @@ public interface ChampionshipMapper {
 
     @Mapping(target = "createdByPlayerId", source = "createdBy.id")
     @Mapping(target = "championshipType", source = "championshipType") // ENUM → String
-    @Mapping(target = "championshipStatus", source = "championshipStatus") // ENUM → String
+    @Mapping(target = "championshipStatus", source = "championshipStatus.description") // ENUM → String
     ChampionshipDTO toDto(Championship championship);
 
     @Mapping(target = "participants", ignore = true)

@@ -1,6 +1,7 @@
 package br.com.jzsports.tournament_control.controller;
 
 import br.com.jzsports.tournament_control.model.dto.phase.PhaseDTO;
+import br.com.jzsports.tournament_control.model.dto.phase.PhaseResponseDTO;
 import br.com.jzsports.tournament_control.model.entity.Phase;
 import br.com.jzsports.tournament_control.model.mapper.PhaseMapper;
 import br.com.jzsports.tournament_control.service.PhaseService;
@@ -24,8 +25,8 @@ public class PhaseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PhaseDTO> getByChampionshipId(@PathVariable Long id) {
-        PhaseDTO dto = phaseService.findByChampionshipId(id);
+    public ResponseEntity<PhaseResponseDTO> getByChampionshipId(@PathVariable Long id) {
+        PhaseResponseDTO dto = phaseService.findByChampionshipId(id);
         return ResponseEntity.ok().body(dto);
     }
 

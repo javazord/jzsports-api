@@ -15,9 +15,9 @@ import java.util.List;
 public class MatchDTO {
 
     private Long id;
-    private EMatchStatus status;
-    private Championship championship;
+    private String status;
+    private ChampionshipDTO championship;
     private Long phaseId;
-    private List<MatchParticipant> participants;
+    private List<MatchParticipantDTO> participants;
 
 }

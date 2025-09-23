@@ -14,6 +14,7 @@ public interface MatchMapper {
 
     @Mapping(target = "phaseId", source = "phase.id")
     @Mapping(target = "participants", source = "participants")
+    @Mapping(target = "status", source = "status.description")
     MatchDTO toDto(Match match);
 
     List<MatchDTO> toDtoList(List<Match> matches);

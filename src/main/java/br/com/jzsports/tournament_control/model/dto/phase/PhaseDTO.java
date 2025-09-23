@@ -13,9 +13,8 @@ import java.util.List;
 public class PhaseDTO {
 
     private Long id;
-    private String phaseTypeDescription;
+    private String phaseType;
     private Long championshipId;
-    private ETypePhase phaseType;
-    private List<Match> matches;
+    private List<Long> matchesId;
 
 }
